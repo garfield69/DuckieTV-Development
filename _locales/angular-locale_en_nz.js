@@ -55,12 +55,13 @@ $provide.value("$locale", {
     ],
     "fullDate": "EEEE, d MMMM y",
     "longDate": "d MMMM y",
-    "medium": "d/MM/yyyy h:mm:ss a",
-    "mediumDate": "d/MM/yyyy",
-    "mediumTime": "h:mm:ss a",
-    "short": "d/MM/yy h:mm a",
-    "shortDate": "d/MM/yy",
-    "shortTime": "h:mm a"
+    "medium": "EEE dd-MMM-yyyy HH:mm:ss",
+    "mediumDate": "EEE dd-MMM-yyyy",
+    "mediumTime": "HH:mm:ss",
+    "short": "EEE dd-MMM-yy HH:mm",
+    "shortDate": "dd-MMM-yy",
+    "shortTime": "HH:mm",
+    "backupDate": "dd-MMM-yyyy"
   },
   "NUMBER_FORMATS": {
     "CURRENCY_SYM": "$",

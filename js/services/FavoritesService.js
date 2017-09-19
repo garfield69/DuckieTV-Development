@@ -37,7 +37,7 @@ DuckieTV.factory('FavoritesService', ["$q", "$rootScope", "FanartService", "$inj
             data.airs_time = data.airs.time;
             data.timezone = data.airs.timezone;
             data.firstaired = new Date(data.first_aired).getTime();
-            if (service.downloadRatings && (!serie.ratingcount || serie.ratingcount + 25 > data.votes)) {
+            if (service.downloadRatings) {
                 data.rating = Math.round(data.rating * 10);
                 data.ratingcount = data.votes;
             } else {
@@ -93,7 +93,7 @@ DuckieTV.factory('FavoritesService', ["$q", "$rootScope", "FanartService", "$inj
             data.TVDB_ID = data.tvdb_id;
             data.IMDB_ID = data.imdb_id;
             data.TRAKT_ID = data.trakt_id;
-            if (service.downloadRatings && (!episode.ratingcount || episode.ratingcount + 25 > data.votes)) {
+            if (service.downloadRatings) {
                 data.rating = Math.round(data.rating * 10);
                 data.ratingcount = data.votes;
             } else {

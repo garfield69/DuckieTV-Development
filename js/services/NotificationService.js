@@ -29,6 +29,32 @@ DuckieTV.factory("NotificationService", ["SettingsService", function(SettingsSer
                 message: message,
                 iconUrl: "img/logo/icon64.png"
             });
+            var soundPlayed = false;
+            playSound = function(key, useDefault) {
+                useDefault = useDefault || false;
+                switch(key) {
+                    case "Torrent":
+                        var audio = new Audio('tada.wav');
+                        audio.play();
+                        soundPlayed = true;
+                        break;
+                    case "Download":
+                        var audio = new Audio('Exclamation.wav');
+                        audio.play();
+                        soundPlayed = true;
+                        break;
+                    default:
+                        if (useDefault) {
+                            var audio = new Audio('notify.wav');
+                            audio.play();
+                            soundPlayed = true;
+                        }
+                }
+            }
+            playSound(message.split(' ')[0]);
+            if (!soundPlayed) {
+                playSound(title.split(' ')[0], true);
+            }
         },
         /** 
          * Create a notification of the type 'list' with the DuckieTV icon

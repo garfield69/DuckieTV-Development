@@ -8,7 +8,7 @@
   <span><button type="button" class="close" ng-click="sidepanel.closeSidePanel()" class="pull-right" uib-tooltip="{{'COMMON/close/btn'|translate}} {{::sidepanel.serie.name}}{{::sidepanel.episode.getFormattedEpisode()?' - ':''}}{{::sidepanel.episode.getFormattedEpisode()}}" tooltip-placement="left">&times;</button></span>
   </h2>
   <h3>{{::sidepanel.episode.episodename}}</h3>
-  <h5 style="text-align: center;">{{::sidepanel.episode.firstaired | date: 'shortDate'}}</h5>
+  <h5 style="text-align: center;">{{::sidepanel.episode.firstaired | date: 'medium'}}</h5>
   <p class="overview" style="text-align:justify">{{::sidepanel.episode.overview}}</p>
 
   <table class="buttons" width="100%" border="0">
@@ -41,7 +41,7 @@
     </tr>
     <tr ng-if="!sidepanel.episode.hasAired() && !sidepanel.episode.isLeaked()">
     <th colspan="2">
-    <p ng-click="sidepanel.markLeaked()" style='font-weight:normal; text-align:center; cursor:pointer; padding-top:50px'><pcont translate-once>SIDEPANEL/EPISODE-DETAILS/leak-override/lbl</pcont>{{::sidepanel.episode.firstaired | date: 'shortDate'}}</p>
+    <p ng-click="sidepanel.markLeaked()" style='font-weight:normal; text-align:center; cursor:pointer; padding-top:50px'><pcont translate-once>SIDEPANEL/EPISODE-DETAILS/leak-override/lbl</pcont>{{::sidepanel.episode.firstaired | date: 'medium'}}</p>
     </th>
     </tr>
     <tr>

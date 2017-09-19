@@ -42,7 +42,7 @@
         "position": "center",
         "resizable": true,
         "show_in_taskbar": true,
-        "title": "DuckieTV Standalone v1.1.6",
+        "title": "Dtv116d",
         "transparent": false,
         "visible": true,
         "width": 1000
@@ -66,7 +66,7 @@
     },
     "js-flags": "",
     "license": "SEE LICENSE IN LICENSE.md",
-    "name": "DuckieTV-Standalone",
+    "name": "DuckieTV-Standalone-Development",
     "node-main": "",
     "default_locale": "en",
     "bg-script": "standalone-background.js",

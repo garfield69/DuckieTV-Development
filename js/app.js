@@ -94,6 +94,23 @@ var DuckieTV = angular.module('DuckieTV', [
 }])
 
 /**
+ * add mixed case fontFamily if user enabled
+ */
+.run(['SettingsService', function(SettingsService) {
+    function init() {
+        var x = document.createElement("link");
+        var y = document.createAttribute("rel");
+        y.value = "stylesheet";
+        x.setAttributeNode(y);
+        var z = document.createAttribute("href");
+        z.value = "css/main_2.css";
+        x.setAttributeNode(z);
+        document.head.appendChild(x);
+    }
+    window.onload = init;
+}])
+
+/**
  * setting platform specific defaults (uTorrent for windows, uTorrent Web UI or non-windows)
  */
 .run(['SettingsService', function(SettingsService) {
