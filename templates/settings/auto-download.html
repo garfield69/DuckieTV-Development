@@ -49,7 +49,7 @@
     <span class="alert alert-danger" ng-hide="d.delay.$valid" translate-value-addelaymax="{{(adPeriod * 24 * 60).minsToDhm()}}" translate>COMMON/autodownload-delay-range/alert</span>
 
   </div>
-  <!--hide until complete>
+  <!--hide until complete-->
   <hr class="setting-divider">
 
   <h2>
@@ -69,18 +69,26 @@
   <div ng-show="usingMultiSE">
     <hr class="setting-divider">
 
-    <!-- multi search engines check boxes -->
-    <!--muh>
+    <!--multi search engines check boxes-->
     <p translate-once>SETTINGS/AUTODOWNLOAD/multi-se/desc</p>
     <div style="padding-bottom: 3px">
+      <div class="torrentBtns btn-group">
+        <button ng-hide="name === searchprovider" type="button" class="btn btn-default" ng-repeat="name in searchProviders | orderBy: name" ng-click="toggleSE(name)" ng-style="{color: name !== defaultProvider ? 'white' : 'gray'}">
+          <i class="glyphicon glyphicon-{{multiSE[name] ? 'ok' : 'remove'}}"></i>
+          &nbsp;{{::name}}&nbsp;
+          <i ng-if="isJackett(name)" class="glyphicon glyphicon-jackett-small" style="float:right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!--div style="padding-bottom: 3px">
       <div style="display: flex; overflow-y: auto">
         <div class="checkbox" ng-repeat="name in searchProviders | orderBy: name">
           <input ng-disabled="name === searchprovider" type="checkbox" ng-model="multiSE[name]" ng-change="saveMultiSE()" id="mse_{{name}}}">
           <label for="mse_{{name}}" ng-style="{color: name !== searchprovider ? 'white' : 'gray'}">{{name}}</label>
         </div>
       </div>
-    </div>
+    </div-->
   </div>
-  <-->
 
 </div>

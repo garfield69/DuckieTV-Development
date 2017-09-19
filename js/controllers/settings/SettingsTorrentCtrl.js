@@ -48,7 +48,8 @@ DuckieTV.controller('SettingsTorrentCtrl', ["$scope", "$rootScope", "$injector",
         SettingsService.set('autodownload.multiSE',$scope.multiSE); // save updated multiSE list.
 
         // save multi Search Engine states
-        $scope.saveMultiSE = function() {
+        $scope.toggleSE = function(name) {
+            $scope.multiSE[name] = !$scope.multiSE[name];
             SettingsService.set('autodownload.multiSE',$scope.multiSE);
             AutoDownloadService.detach(); // recycle AD to pick up changes.
             AutoDownloadService.attach();
