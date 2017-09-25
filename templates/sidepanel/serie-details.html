@@ -69,7 +69,7 @@
           <td>{{::sidepanel.translateStatus(sidepanel.serie.status)}}</td>
         </tr>
         <tr ng-if="sidepanel.serie.actors.length > 0">
-          <th translate-once>COMMON/actors/hdr</th>
+          <th><a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.actors)" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true" translate-once>COMMON/actors/hdr</a></th>
           <td>
             <ul class="actors list-unstyled">
               <li ng-repeat="actors in sidepanel.serie.actors.split('|') track by $index">{{::actors}}</li>

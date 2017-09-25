@@ -153,5 +153,10 @@ DuckieTV.controller('SidepanelSerieCtrl', ["$rootScope", "$filter", "$location",
         this.isAdding = function(tvdb_id) {
             return FavoritesService.isAdding(tvdb_id);
         };
+
+        this.dataToClipboard = function(data) {
+            var clip = nw.Clipboard.get();
+            clip.set(data.replace(/\|/g,'\r\n'), 'text');
+        };
     }
 ]);
