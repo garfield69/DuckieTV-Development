@@ -4,7 +4,7 @@
 DuckieTV
 
 .constant('availableLanguageKeys', [
-    'de_de', 'en_uk', 'en_us', 'es_es', 'fr_fr', 'it_it', 'ja_jp', 'ko_kr', 'nb_no', 'nl_nl', 'pt_pt', 'ro_ro', 'ru_ru', 'sl_si', 'sv_se', 'zh_cn'
+    'de_de', 'el_gr', 'en_uk', 'en_us', 'es_es', 'fr_fr', 'it_it', 'ja_jp', 'ko_kr', 'nb_no', 'nl_nl', 'pt_pt', 'ro_ro', 'ru_ru', 'sl_si', 'sv_se', 'zh_cn'
 ])
 
 .constant('customLanguageKeyMappings', {
