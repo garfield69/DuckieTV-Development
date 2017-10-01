@@ -12,6 +12,8 @@ DuckieTV
     'ca': 'en_uk',
     'de': 'de_de',
     'de_DE': 'de_de',
+    'el_GR': 'el_gr',
+    'el_gr': 'el_gr',
     'en': 'en_us',
     'en_AU': 'en_uk',
     'en_au': 'en_uk',
