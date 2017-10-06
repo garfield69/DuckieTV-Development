@@ -55,7 +55,8 @@ DuckieTV
                     } else {
                         var episodeDetails = [
                             FavoritesService.getByID_Serie(episode.ID_Serie).name,
-                            episode.getFormattedEpisode()
+                            episode.getFormattedEpisode(),
+                            torrent.name
                         ].join(" ");
                         if (window.debug926) console.debug('TorrentMonitor: episode hash(%s) torrent.name(%s) episodeDetails(%s) downloaded', torrentHash, torrent.name, episodeDetails);
                         NotificationService.notify("Torrent finished", episodeDetails);

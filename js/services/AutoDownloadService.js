@@ -278,8 +278,10 @@ DuckieTV
 
                         DuckieTorrent.getClient().AutoConnect().then(function() {
                             var torrentHash = null;
-                            NotificationService.notify(serie.name + " " + episode.getFormattedEpisode(),
-                                "Download started on " + DuckieTorrent.getClient().getName());
+                            NotificationService.notify(
+                                [serie.name, episode.getFormattedEpisode()].join(' '),
+                                [items[0].releasename, "Download started on", DuckieTorrent.getClient().getName()].join(' ')
+                            );
                             if (items[0].magnetUrl) {
                                 torrentHash = items[0].magnetUrl.getInfoHash();
                                 TorrentSearchEngines.launchMagnet(items[0].magnetUrl, episode.TVDB_ID, serie.dlPath, label);
