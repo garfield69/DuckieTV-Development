@@ -18,7 +18,7 @@
 
     <h2 bebas="{{bebas}}" translate-once>SETTINGS/TORRENT/choose-client/hdr</h2>
 
-    <a ng-click="setTorrentClient(client)" ng-repeat="client in getTorrentClients()" class="choose-client btn btn-{{ currentClient == client ? 'success' : '' }}" >
+    <a ng-click="setTorrentClient(client)" ng-repeat="client in getTorrentClients()" class="choose-client btn bebas-{{bebas}} btn-{{ currentClient == client ? 'success' : '' }}" >
         <i class="torrentlogo {{client.toLowerCase()}}"></i> {{client}}
     </a>
 
