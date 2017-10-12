@@ -93,18 +93,30 @@ var DuckieTV = angular.module('DuckieTV', [
 }])
 
 /**
- * add mixed case fontFamily if user enabled
+ * drop bebasRegular fontFamily if user enabled mixedCase
  */
 .run(['SettingsService', function(SettingsService) {
     function init() {
-        var x = document.createElement("link");
-        var y = document.createAttribute("rel");
-        y.value = "stylesheet";
-        x.setAttributeNode(y);
-        var z = document.createAttribute("href");
-        z.value = "css/main_2.css";
-        x.setAttributeNode(z);
-        document.head.appendChild(x);
+        if (!SettingsService.get('font.bebas.enabled')) {
+            var elemStyle = document.createElement('style');
+            elemStyle.id = "bebas-override";
+            elemStyle.innerHTML = [
+                "h1, h2, h3, strong, .inline-checkbox label, sidepanel .buttons .torrent-mini-remote-control>span, .settings .buttons .btn {",
+                    "font-family: helvetica,sans-serif !important;",
+                "}",
+                "strong {",
+                    "letter-spacing: normal !important;",
+                    "font-weight: bold !important;",
+                "}",
+                    "sidepanel .buttons .torrent-mini-remote-control> span {",
+                    "letter-spacing: normal !important;",
+                "}",
+                    "sidepanel .buttons strong {",
+                    "letter-spacing: normal !important;",
+                "}"
+            ].join(' ');
+            document.body.appendChild(elemStyle);            
+        }
     }
     window.onload = init;
 }])

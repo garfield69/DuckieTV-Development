@@ -44,14 +44,6 @@ button[disabled], html input[disabled], .form-control[disabled], .form-control[r
   box-shadow: none;
 }
 
-
-/* Something? I dunno
-.tooltip {
-    border: 0 !important;
-    line-height: inherit;
-} */
-
-
 /* Fix to prevent tooltips from the calendar overflowing edge of screen  */
 
 .tooltip.calendar {
