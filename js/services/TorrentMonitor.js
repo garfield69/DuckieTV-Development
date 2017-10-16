@@ -40,6 +40,7 @@ DuckieTV
          * If not marked, updates the database and the torrenthashlist service so that this doesn't have to happen again
          */
         function isDownloaded(torrent) {
+            var debugNotify = function(notificationId) { if (window.debug982) console.debug('TM notify id', notificationId);};
             var torrentHash = ('hash' in torrent) ? torrent.hash.toUpperCase() : undefined;
             if (!TorrentHashListService.isDownloaded(torrentHash) && torrent.getProgress() == 100) {
                 CRUD.FindOne('Episode', {
@@ -47,10 +48,11 @@ DuckieTV
                 }).then(function(episode) {
                     TorrentHashListService.markDownloaded(torrentHash);
                     if (!episode) {
-                        if (window.debug926) console.debug('TorrentMonitor: non-episode hash(%s) torrent.name(%s) downloaded', torrentHash, torrent.name);
+                        if (window.debug982) console.debug('TorrentMonitor: non-episode hash(%s) torrent.name(%s) downloaded', torrentHash, torrent.name);
                         NotificationService.notify(
                             "Torrent finished",
-                            torrent.name
+                            torrent.name,
+                            debugNotify
                         );
                     } else {
                         var episodeDetails = [
@@ -58,8 +60,8 @@ DuckieTV
                             episode.getFormattedEpisode(),
                             torrent.name
                         ].join(" ");
-                        if (window.debug926) console.debug('TorrentMonitor: episode hash(%s) torrent.name(%s) episodeDetails(%s) downloaded', torrentHash, torrent.name, episodeDetails);
-                        NotificationService.notify("Torrent finished", episodeDetails);
+                        if (window.debug982) console.debug('TorrentMonitor: episode hash(%s) torrent.name(%s) episodeDetails(%s) downloaded', torrentHash, torrent.name, episodeDetails);
+                        NotificationService.notify("Torrent finished", episodeDetails, debugNotify);
                         episode.markDownloaded().then(function(result) {
                             $rootScope.$broadcast('episode:marked:downloaded', episode);
                             console.info("Episode marked as downloaded in database. ", episodeDetails);

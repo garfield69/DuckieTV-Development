@@ -28,7 +28,7 @@ DuckieTV.factory("NotificationService", ["SettingsService", function(SettingsSer
                 title: title,
                 message: message,
                 iconUrl: "img/logo/icon64.png"
-            });
+            }, callback);
             var soundPlayed = false;
             playSound = function(key, useDefault) {
                 useDefault = useDefault || false;
