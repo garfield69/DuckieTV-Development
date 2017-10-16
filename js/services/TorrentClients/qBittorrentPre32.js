@@ -110,7 +110,8 @@ DuckieTorrent.factory('qBittorrentRemote', ["BaseTorrentRemote",
                 var self = this;
                 return this.request('files', hash).then(function(data) {
                     return self.request('general', hash).then(function(general) {
-                        data.data.downloaddir = general.data.save_path.slice(0, -1);
+                        console.warn(general.data.save_path);
+                        data.data.downloaddir = (general.data.save_path) ? general.data.save_path.slice(0, -1) : undefined;
                         return data.data;
                     });
                 });
