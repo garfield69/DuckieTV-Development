@@ -1,6 +1,5 @@
 /** 
  * The notification service can create Chrome Notifications to notify users of aired episodes.
- * Currently still needs to be implemented by hooking into the AutoDownloadService
  */
 DuckieTV.factory("NotificationService", ["SettingsService", function(SettingsService) {
     var ids = {}; // track existing notifications
@@ -9,12 +8,27 @@ DuckieTV.factory("NotificationService", ["SettingsService", function(SettingsSer
      * Create a Chrome Notification
      */
     var create = function(options, callback) {
-        if (!SettingsService.get('notifications.enabled')) {
+        if ('chrome' in window && 'notifications' in window.chrome && 'create' in window.chrome.notifications && 'getPermissionLevel' in window.chrome.notifications) {
+            if (!SettingsService.get('notifications.enabled')) {
+                return;
+            }
+            window.chrome.notifications.getPermissionLevel( function(level) {
+                // User has elected not to show notifications from the app or extension.
+                if (level.toLowerCase() == 'denied') {
+                    SettingsService.set('notifications.enabled', false);
+                    return;
+                }
+            });
+        } else {
+            // notifications not supported
+            if (SettingsService.get('notifications.enabled')) {
+                SettingsService.set('notifications.enabled', false);
+            }
             return;
         }
         var id = 'seriesguide_' + new Date().getTime();
         ids[id] = options;
-        var notification = chrome.notifications.create(id, options, callback || function() {});
+        var notification = window.chrome.notifications.create(id, options, callback || function() {});
     }
 
 
@@ -29,32 +43,20 @@ DuckieTV.factory("NotificationService", ["SettingsService", function(SettingsSer
                 message: message,
                 iconUrl: "img/logo/icon64.png"
             }, callback);
-            var soundPlayed = false;
-            playSound = function(key, useDefault) {
-                useDefault = useDefault || false;
-                switch(key) {
-                    case "Torrent":
-                        var audio = new Audio('tada.wav');
-                        audio.play();
-                        soundPlayed = true;
-                        break;
-                    case "Download":
-                        var audio = new Audio('Exclamation.wav');
-                        audio.play();
-                        soundPlayed = true;
-                        break;
-                    default:
-                        if (useDefault) {
-                            var audio = new Audio('notify.wav');
-                            audio.play();
-                            soundPlayed = true;
-                        }
+            playSound = function(key) {
+                var audio = new Audio('notify.wav');
+                if (key.indexOf('Download') > -1) {
+                        audio = new Audio('Exclamation.wav');
+                        console.debug('Download: [%s]',key);
+                } else if (key.indexOf('Torrent') > -1) {
+                        audio = new Audio('tada.wav');
+                        console.debug('Torrent: [%s]',key);
+                } else {
+                    console.debug('Default: [%s]',key);
                 }
+                audio.play();
             }
-            playSound(message.split(' ')[0]);
-            if (!soundPlayed) {
-                playSound(title.split(' ')[0], true);
-            }
+            playSound([title, message].join(' '));
         },
         /** 
          * Create a notification of the type 'list' with the DuckieTV icon
