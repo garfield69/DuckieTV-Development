@@ -316,27 +316,23 @@ DuckieTV
             if (typeof $scope.episode !== 'undefined') { // don't close dialogue if search is free-form
                 $modalInstance.close(url);
             }
-            // Jackett can now pass magnets via download link so we need to check for this
-            if (url.indexOf('magnet:?xt=urn:btih:') > -1) {
-                magnetSelect(url, dlPath, label);
-            } else {
-                var channel = $scope.TVDB_ID !== null ? $scope.TVDB_ID : $scope.query;
-                window.parseTorrent.remote(url, function(err, torrentDecoded) {
-                    if (err) {
-                        throw err;
+
+            var channel = $scope.TVDB_ID !== null ? $scope.TVDB_ID : $scope.query;
+            window.parseTorrent.remote(url, function(err, torrentDecoded) {
+                if (err) {
+                    throw err;
+                }
+                var infoHash = torrentDecoded.infoHash.getInfoHash();
+                $injector.get('$http').get(url, {
+                    responseType: 'blob'
+                }).then(function(result) {
+                    try {
+                        TorrentSearchEngines.launchTorrentByUpload(result.data, infoHash, channel, releasename, dlPath, label);
+                    } catch (E) {
+                        TorrentSearchEngines.launchTorrentByURL(url, infoHash, channel, releasename, dlPath, label);
                     }
-                    var infoHash = torrentDecoded.infoHash.getInfoHash();
-                    $injector.get('$http').get(url, {
-                        responseType: 'blob'
-                    }).then(function(result) {
-                        try {
-                            TorrentSearchEngines.launchTorrentByUpload(result.data, infoHash, channel, releasename, dlPath, label);
-                        } catch (E) {
-                            TorrentSearchEngines.launchTorrentByURL(url, infoHash, channel, releasename, dlPath, label);
-                        }
-                    });
                 });
-            }
+            });
         };
 
         $scope.select = function(result) {
