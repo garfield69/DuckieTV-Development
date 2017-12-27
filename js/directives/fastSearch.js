@@ -285,22 +285,26 @@ DuckieTV.directive('fastSearch', ["$window", "dialogs", "$rootScope",
         var urlSelect = function(url, releasename) {
             //console.debug("Torrent URL selected!", url);
             $modalInstance.close(url);
-
-            window.parseTorrent.remote(url, function(err, torrentDecoded) {
-                if (err) {
-                    throw err;
-                }
-                var infoHash = torrentDecoded.infoHash.getInfoHash();
-                $injector.get('$http').get(url, {
-                    responseType: 'blob'
-                }).then(function(result) {
-                    try {
-                        TorrentSearchEngines.launchTorrentByUpload(result.data, infoHash, data.key, releasename);
-                    } catch (E) {
-                        TorrentSearchEngines.launchTorrentByURL(url, infoHash, data.key, releasename);
+            // Jackett can now pass magnets via download link so we need to check for this
+            if (url.indexOf('magnet:?xt=urn:btih:') > -1) {
+                magnetSelect(url);
+            } else {
+                window.parseTorrent.remote(url, function(err, torrentDecoded) {
+                    if (err) {
+                        throw err;
                     }
+                    var infoHash = torrentDecoded.infoHash.getInfoHash();
+                    $injector.get('$http').get(url, {
+                        responseType: 'blob'
+                    }).then(function(result) {
+                        try {
+                            TorrentSearchEngines.launchTorrentByUpload(result.data, infoHash, data.key, releasename);
+                        } catch (E) {
+                            TorrentSearchEngines.launchTorrentByURL(url, infoHash, data.key, releasename);
+                        }
+                    });
                 });
-            });
+            }
         };
 
         $scope.select = function(result) {
