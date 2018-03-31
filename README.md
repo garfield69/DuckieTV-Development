@@ -1,18 +1,18 @@
 DuckieTV Binary, Chrome and Online [![Build Status](https://travis-ci.org/SchizoDuckie/DuckieTV.svg?branch=angular)](https://travis-ci.org/SchizoDuckie/DuckieTV)
 ==============================================
 
-DuckieTV is an application that takes care of TV-Show addicts by providing a personalized TV-Show calendar. DuckieTV makes sure the information is always up-to-date and gives you an integrated blocking-resistant torrent search to help you get to the right download as easy as possible.
+DuckieTV is an application that takes care of TV-Show addicts by providing a personalized TV-Show calendar. DuckieTV ensures the information is always up-to-date and provides an integrated blocking-resistant torrent search to help you get to the right download as easy as possible.
 
 
 With the integrated DuckieTorrent client you can connect DuckieTV to your local Torrent client and be updated on the download progress without switching applications. Support is available for clients of &micro;Torrent/BitTorrent, Aria2, BiglyBT, Deluge, Ktorrent, qBittorrent, rTorrent, Tixati, Transmission and Vuze.
 
 
-As of v0.60 DuckieTV also is also finally becoming a worthy SickBeard competitor by introducing an automatic downloading of shows that have aired and translations into 15 languages (English, Deutch, Español, Français, Italiano, 日本, 한국어, Nederlands, Norsk bokmål, Português, Русский, Română, Slovenščina, Svenska, 简体中文).
+As of v0.60, DuckieTV is finally becoming a worthy SickBeard competitor by introducing an automatic downloading of shows that have aired and translations into 15 languages (English, Deutch, Español, Français, Italiano, 日本, 한국어, Nederlands, Norsk bokmål, Português, Русский, Română, Slovenščina, Svenska, 简体中文).
 
 How can I get it?
 =================
 
-DuckieTV can be installed as either a standalone application on Windows (7, 8.1, 10), Linux (Debian based such as Ubuntu 15.10 and newer), Mac OSX (10.7 and newer) and Android (Marshmallow, Nougat and newer), or installed as a Google Chrome Browser Extension, and you can try the basic features in an online version.
+DuckieTV can be installed as either a standalone application on Windows (7, 8.1, 10), Linux (Debian based such as Ubuntu 15.10 and newer), Mac OSX (10.9 and newer) and Android (Marshmallow, Nougat and newer), or installed as a Google Chrome Browser Extension, and you can try the basic features in an online version.
 
 Install DuckieTV Standalone
 -------------------------------------------
