@@ -30,3 +30,4 @@ nacl_*
 *.exe
 *.log
 *.wav
+*.bin
