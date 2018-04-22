@@ -1,9 +1,10 @@
 <!-- serie-overview.html -->
 <div lazy-background="{{sidepanel.serie.poster}}" class="serie-bg-img"></div>
 <div class="leftpanel serie-overview">
+  <button type="button" class="close" ng-click="sidepanel.closeSidePanel()" uib-tooltip="{{'COMMON/close/btn'|translate}} {{::sidepanel.serie.name}}" tooltip-placement="left">&times;</button>
+
   <h2>
     <span>{{::sidepanel.serie.name}}</span>
-    <span><button type="button" class="close" ng-click="sidepanel.closeSidePanel()" class="pull-right" uib-tooltip="{{'COMMON/close/btn'|translate}} {{::sidepanel.serie.name}}" tooltip-placement="left">&times;</button></span>
   </h2>
   <table width="100%" border="0">
     <tbody class="metadata">
@@ -121,7 +122,7 @@
       </tr>
       <tr>
         <td colspan="2">
-          <a ng-click="sidepanel.removeFromFavorites(sidepanel.serie)" style="background-color:rgba(250,55,55,0.1)">
+          <a ng-click="sidepanel.removeFromFavorites(sidepanel.serie)" class="btn-danger">
             <i class="glyphicon glyphicon-trash"></i>
             <strong translate-once>COMMON/delete-serie/btn</strong>
           </a>
