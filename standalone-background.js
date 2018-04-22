@@ -1360,9 +1360,23 @@ CRUD.define(Serie, {
                         return episode.markWatched(watchedDownloadedPaired, $rootScope);
                     }
                 });
-                return resolve(true)
+                return resolve(true);
             });
         })
+    },
+
+    markSerieAsDownloaded: function($rootScope) {
+        var self = this;
+        return new Promise(function(resolve) {
+            self.getEpisodes().then(function(episodes) {
+                episodes.forEach(function(episode) {
+                    if (episode.hasAired() && (!episode.isDownloaded())) {
+                        return episode.markDownloaded($rootScope);
+                    }
+                });
+                return resolve(true);
+            });
+        });
     },
 
     markSerieAsUnWatched: function($rootScope) {
