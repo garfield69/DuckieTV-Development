@@ -10,6 +10,7 @@ DuckieTV.controller("tTorrentCtrl", ["$injector", "tTorrent", "SettingsService",
                 server: SettingsService.get('ttorrent.server'),
                 port: SettingsService.get('ttorrent.port'),
                 use_auth: SettingsService.get('ttorrent.use_auth'),
+                username: SettingsService.get('ttorrent.username'),
                 password: SettingsService.get('ttorrent.password'),
                 hideUseAuth: false
             };

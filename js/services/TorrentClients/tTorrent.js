@@ -86,7 +86,7 @@ DuckieTorrent.factory('tTorrentRemote', ["BaseTorrentRemote",
                     'charset': 'utf-8',
                 };
                 if (this.config.use_auth) {
-                    headers.Authorization = [this.config.password];
+                    headers.Authorization = [this.config.username, this.config.password];
                 };
                 return this.request('portscan', {headers: headers}).then(function(result) {
                     var scraper = new HTMLScraper(result.data);
@@ -123,7 +123,7 @@ DuckieTorrent.factory('tTorrentRemote', ["BaseTorrentRemote",
                     'charset': 'utf-8',
                 };
                 if (this.config.use_auth) {
-                    headers.Authorization = [this.config.password];
+                    headers.Authorization = [this.config.username, this.config.password];
                 };
                 return this.request('torrents', {headers: headers}).then(function(result) {
                     var scraper = new HTMLScraper(result.data);
@@ -326,7 +326,7 @@ url=magnet%3A%3Fxt%3Durn%3Abtih%3A8d65c530efad946cc719917b5f0e140eee52754f%26dn%
                     'Content-Type': 'application/x-www-form-urlencoded',
                 };
                 if (this.config.use_auth) {
-                    headers.Authorization = [this.config.password];
+                    headers.Authorization = [this.config.username, this.config.password];
                 }
                 return $http.post(this.getUrl('addmagnet'), 'url=' + encodeURIComponent(magnetHash), {
                     headers: headers
@@ -392,7 +392,7 @@ Content-Type: application/x-bittorrent
                     'Content-Type': 'application/x-bittorrent',
                 };
                 if (this.config.use_auth) {
-                    headers.Authorization = [this.config.password];
+                    headers.Authorization = [this.config.username, this.config.password];
                 }
                 var fd = new FormData();
                 fd.append('torrentfile', data, releaseName + '.torrent');
@@ -438,7 +438,7 @@ Content-Type: application/x-bittorrent
                     'charset': 'utf-8',
                 };
                 if (this.config.use_auth) {
-                    headers.Authorization = [this.config.password];
+                    headers.Authorization = [this.config.username, this.config.password];
                 }
                 return $http.post(this.getUrl(method, id), {
                     headers: headers
@@ -467,6 +467,7 @@ Content-Type: application/x-bittorrent
         service.setConfigMappings({
             server: 'ttorrent.server',
             port: 'ttorrent.port',
+            username: 'ttorrent.username',
             password: 'ttorrent.password',
             use_auth: 'ttorrent.use_auth'
         });
