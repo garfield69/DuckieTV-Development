@@ -13,10 +13,6 @@ DuckieTorrent
  *
  * The Utorrent/Bittorrent clients listen on one of 20 ports on localhost to allow other apps to connect
  * to them.
- * *****************************************************************
- * port 10000 is no longer discoverable as at version 3.5.3
- * https://engineering.bittorrent.com/2018/02/22/httprpc-security-vulnerabilities-resolved-in-utorrent-bittorrent-and-utorrent-web/
- * *****************************************************************
  * Discovery is done by performing a /version request to these ports until the first hit
  * After that, an authentication token is requested on the client (you need to save this somewhere, the demo does so in localStorage)
  * With the token you can get a session ID, and with the session ID you can start polling for data. Don't poll and the session will expire
@@ -81,13 +77,14 @@ DuckieTorrent
     this.connected = false;
     this.initialized = false;
 
-    this.$get = ["$rootScope", "$q", "$http", "URLBuilder", "$parse", "uTorrentRemote",
-        function($rootScope, $q, $http, URLBuilder, $parse, uTorrentRemote) {
+    this.$get = ["$rootScope", "$q", "$http", "URLBuilder", "$parse", "uTorrentRemote", "$sce",
+        function($rootScope, $q, $http, URLBuilder, $parse, uTorrentRemote, $sce) {
             var self = this;
 
             /**
              * Build a JSONP request using the URLBuilder service.
-             * Auto-magically adds the JSON_CALLBACK option and executes the built in parser, or returns the result
+             * Auto-magically adds the JSON_CB option and executes the built in parser, or returns the result
+             * JSON_CALLBACK cannot be used as a callback name anymore apparently.
              * @param string type URL to fetch from the request types
              * @param object params GET parameters
              * @param object options $http optional options
@@ -95,11 +92,14 @@ DuckieTorrent
             var jsonp = function(type, params, options) {
                 var d = $q.defer();
                 params = angular.extend(params || {}, {
-                    callback: 'JSON_CALLBACK'
+                    jsonpCallbackParam: 'JSON_CB'
                 });
-                var url = URLBuilder.build(self.getUrl(type), params);
+
                 var parser = self.getParser(type);
-                $http.jsonp(url, options || {}).then(function(response) {
+                var url = URLBuilder.build(self.getUrl(type), params);
+                var safeUrl = $sce.trustAsResourceUrl(url); // Untrusted URLs will no longer work
+
+                $http.jsonp(safeUrl, options || {}).then(function(response) {
                     d.resolve(parser ? parser(response) : response.data);
                 }, function(err) {
                     d.reject(err);
