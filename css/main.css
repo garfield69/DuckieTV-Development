@@ -30,6 +30,8 @@
 
 .dropdown-menu .divider {
   opacity: 0.7;
+  padding: 1px 0;
+  margin: 5px 0;
 }
 
 .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
@@ -43,6 +45,14 @@ button[disabled], html input[disabled], .form-control[disabled], .form-control[r
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+
+/* Something? I dunno
+.tooltip {
+    border: 0 !important;
+    line-height: inherit;
+} */
+
 
 /* Fix to prevent tooltips from the calendar overflowing edge of screen  */
 
@@ -531,6 +541,9 @@ button span, .dropdown-menu span, .dropdown-menu input {
 .close:focus, .close:hover, button.close {
   color: white;
   opacity: 0.8;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 input[type=text], input[type=url], input[type=password], input[type=number], option, select, select.form-control {
@@ -1444,9 +1457,10 @@ div [date-picker] {
 [date-picker] {
   border-radius: 10px;
   user-select: none;
-  transition: transform 0.4s ease-in-out, background-color 0.3s ease-in-out;
+  transition: transform 0.32s linear, background-color 0.3s linear;
   z-index: 101;
   position: relative;
+  will-change: transform;
 }
 
 [date-picker] span {
@@ -1504,7 +1518,7 @@ div [date-picker] {
 }
 
 [date-picker].zoom td.day:first-child:hover {
-  transform: scale(1.5) translate3d(80px, 15px, 0px);
+  transform: scale(1.5) translateX(85px);
   transform-origin: center center;
 }
 
@@ -2079,7 +2093,8 @@ sidepanel>div {
   color: white;
   background-color: rgba(25, 25, 25, 1);
   transform: translate3d(800px, 0px, 0px);
-  transition: all 0.35s linear;
+  transition: transform 0.32s linear;
+  will-change: transform;
 }
 
 .sidepanelActive sidepanel .sidepanel {
@@ -2119,12 +2134,12 @@ sidepanel .buttons strong {
 
 sidepanel .buttons a {
   display: block;
-  padding: 14px;
+  padding: 12px;
   margin: 5px 15px;
   border: 1px solid #fff;
   border-radius: 9px;
   text-align: center;
-  transition: background-color 0.3s;
+  transition: background-color 0.25s;
   user-select: none;
 }
 
@@ -2161,13 +2176,17 @@ sidepanel a {
   transition: background-color 0.3s;
 }
 
-sidepanel .buttons a.delete {
-  background-color: rgba(250, 66, 66, 0.3);
-}
-
 sidepanel .buttons a:hover {
   background-color: rgba(66, 66, 66, 0.8);
   cursor: pointer;
+}
+
+sidepanel .buttons a.btn-danger {
+  background-color:rgba(250, 55, 55, 0.1);
+}
+
+sidepanel .buttons a.btn-danger:hover {
+  background-color:rgba(250, 55, 55, 0.2);
 }
 
 sidepanel .buttons a.no-hover {
@@ -2284,7 +2303,7 @@ sidepanel .buttons .two-face-torrent .download {
 }
 
 sidepanel .buttons .two-face-torrent .auto-download {
-  padding: 14px 10px;
+  padding: 12px 10px;
   margin: 0px;
   border-left: 0px;
   border-bottom-left-radius: 0;
@@ -2954,8 +2973,8 @@ ng-dial-gauge {
 }
 
 #serieSettingsForm label.control-label {
-  font-size: larger;
-  line-height: 35px;
+  font-size: 15px;
+  line-height: 30px;
   vertical-align: middle;
   display: inline-block;
 }
@@ -2986,6 +3005,10 @@ ng-dial-gauge {
 @media (max-height: 768px) {
   sidepanel .buttons a {
     padding: 8px;
+    margin: 4px 5px;
+  }
+  sidepanel .buttons a strong {
+    font-size: 17px;
   }
   sidepanel .buttons i.glyphicon {
     font-size: 20px;
