@@ -387,6 +387,10 @@ Content-Type: application/x-bittorrent
 <data>
 */
             addTorrentByUpload: function(data, infoHash, releaseName) { // test ABEND
+                if (!this.config.allow_dot_torrent) {
+                    console.warn('dot.torrent submissions are disabled', infoHash, releaseName);
+                    return false;
+                };
                 var self = this;
                 var headers = {
                     'Content-Type': 'application/x-bittorrent',
@@ -469,7 +473,8 @@ Content-Type: application/x-bittorrent
             port: 'ttorrent.port',
             username: 'ttorrent.username',
             password: 'ttorrent.password',
-            use_auth: 'ttorrent.use_auth'
+            use_auth: 'ttorrent.use_auth',
+            allow_dot_torrent: 'ttorrent.dot.torrent.enabled'
         });
         service.setEndpoints({
             portscan: '/',
