@@ -249,33 +249,39 @@ DuckieTV
                      * Search torrent SE for the torrent query
                      */
                     return searchEngine.search(q, true).then(function(results) {
+                        if (localStorage.getItem('garfield69')) console.debug('results',q,results);
                         var items = $filter('orderBy')(results, '-seeders');
                         items = items.filter(filterByScore);
                         if (items.length === 0) {
                             service.activityUpdate(serie, episode, q, 4); // 'nothing found'
                             return; // no results, abort
                         };
+                        if (localStorage.getItem('garfield69')) console.debug('after score',items);
                         if (requireKeywordsModeOR) {
                             items = items.filter(filterRequireKeywords);
                             if (items.length === 0) {
                                 service.activityUpdate(serie, episode, q, 5, ' RK'); // 'filtered out RK'
                                 return; // no results, abort
                             }
+                            if (localStorage.getItem('garfield69')) console.debug('after RK',items);
                         };
                         items = items.filter(filterIgnoreKeywords);
                         if (items.length === 0) {
                             service.activityUpdate(serie, episode, q, 5, ' IK'); // 'filtered out IK'
                             return; // no results, abort
                         }
+                        if (localStorage.getItem('garfield69')) console.debug('after IK',items);
                         items = items.filter(filterBySize);
                         if (items.length === 0) {
                             service.activityUpdate(serie, episode, q, 5, ' MS'); // 'filtered out MS'
                             return; // no results, abort
                         };
+                        if (localStorage.getItem('garfield69')) console.debug('after MS',items);
                         if (items[0].seeders != 'n/a' && parseInt(items[0].seeders, 10) < minSeeders) { // not enough seeders are available.
                             service.activityUpdate(serie, episode, q, 7, items[0].seeders + ' < ' + minSeeders); // 'seeders x < y'
                             return; // no results, abort
                         }
+                        if (localStorage.getItem('garfield69')) console.debug('after seeders',items);
 
                         DuckieTorrent.getClient().AutoConnect().then(function() {
                             var torrentHash = null;

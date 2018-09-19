@@ -708,6 +708,12 @@ serieheader .badge {
   transition: opacity 0.2s ease-in-out;
 }
 
+serieheader .leftbadge,
+sidepanel .serie-img .leftbadge {
+  left: 2px;
+  right: unset !important;
+}
+
 [series-grid=true] serieheader[mode=poster] {
   top: 0px;
   left: 0px;
@@ -754,6 +760,10 @@ serieheader .poster {
   transition: width 0.4s ease-in-out, height 0.4s ease-in-out, border 0.2s ease-in-out;
 }
 
+serieheader .poster:not(.img-load-error) {
+  border: 1px solid transparent;
+}
+
 serieheader .poster figure, serieheader .banner figure {
   width: 100%;
   height: 100%;
@@ -764,19 +774,20 @@ serieheader .poster .img {
   width: 100%;
   height: 100%;
   opacity: 1;
-  background-size: contain;
+  background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
-  transition: opacity .175s ease-in-out, filter .175s ease-in-out;
-  filter: brightness(0.90);
+  transition: opacity 150ms ease-in-out, filter 150ms ease-in-out;
+  filter: brightness(0.95);
 }
 
 serieheader .poster:hover .img {
-  filter: brightness(1.04);
+  filter: brightness(1.06);
 }
 
+serieheader.active .poster, serieheader.active .banner,
 .serieheader.active .poster, .serieheader.active .banner {
-  border: 1px solid yellow;
+  border: 1px solid yellow !important;
 }
 
 serieheader .poster.img-loading .img, serieheader .banner.img-loading .img {
@@ -870,8 +881,8 @@ serieheader .earmark.add {
   transform: translateY(100px);
   width: 100%;
   vertical-align: middle;
-  background-color: rgba(125, 125, 125, 0.4);
-  transition: all 0.2s ease-in;
+  background-color: rgba(50, 50, 50, 0.65);
+  transition: transform 150ms;
   cursor: pointer;
 }
 
@@ -1135,6 +1146,10 @@ series-list .trakt-import serieheader, series-list .backup-import serieheader {
 series-list .trakt-import serieheader h3, series-list .backup-import serieheader h3 {
   font-size: 18px;
   text-align: center;
+}
+
+.import-container serieheader {
+  display: inline-block;
 }
 
 .trakt-import .trakt-login td {
