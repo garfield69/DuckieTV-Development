@@ -29,7 +29,7 @@
         </tr>
         <tr>
           <th>IDS</th>
-          <td>TVDB {{::sidepanel.serie.TVDB_ID}}, TRAKT {{::sidepanel.serie.TRAKT_ID}},<br/>IMDB {{::sidepanel.serie.IMDB_ID}}</td>
+          <td>TVDB <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.TVDB_ID.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.TVDB_ID}}</a>, TRAKT {{::sidepanel.serie.TRAKT_ID}},<br/>IMDB {{::sidepanel.serie.IMDB_ID}}</td>
         </tr>
         <tr>
           <th translate-once>COMMON/airs-on/hdr</th>
