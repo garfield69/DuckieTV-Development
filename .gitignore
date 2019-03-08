@@ -3,7 +3,6 @@ node_modules/
 locales/
 pnacl/
 dist/
-DuckieTV.exe
 icudtl.dat
 .srclib-cache/
 .srclib-store/
@@ -14,10 +13,6 @@ nwjc
 build/nwjs_download_cache
 .idea
 **/Thumbs.db
-ffmpeg.dll
-snapshot_blob.bin
-natives_blob.bin
-nacl_irt_x86_64.nexe
 libexif.dlllib/
 payload
 lib
@@ -31,3 +26,4 @@ nacl_*
 *.log
 *.wav
 *.bin
+*.nexe
