@@ -50,11 +50,11 @@ DuckieTV
             TorrentHashListService.markDownloaded(torrentHash)
             if (!episode) {
               if (window.debug982) console.debug('TorrentMonitor: non-episode hash(%s) torrent.name(%s) downloaded', torrentHash, torrent.name)
-              NotificationService.notify(
-                'Torrent finished',
-                torrentHash,
-                torrent.name
-              )
+              var torrentDetails = [
+                torrent.name,
+                torrentHash
+              ].join(' ')
+              NotificationService.notify('Torrent finished',torrentDetails)
             } else {
               var episodeDetails = [
                 FavoritesService.getByID_Serie(episode.ID_Serie).name,
