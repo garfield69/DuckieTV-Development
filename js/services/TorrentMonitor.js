@@ -52,7 +52,7 @@ DuckieTV
               if (window.debug982) console.debug('TorrentMonitor: non-episode hash(%s) torrent.name(%s) downloaded', torrentHash, torrent.name)
               NotificationService.notify(
                 'Torrent finished',
-                episode.getFormattedEpisode(),
+                torrentHash,
                 torrent.name
               )
             } else {
