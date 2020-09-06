@@ -10,10 +10,12 @@ DuckieTV.run(['dialogs', '$http',
     var dlgLinks = '<h2>Questions? Suggestions? Bugs? Kudo\'s?</h2>Find DuckieTV on <a href="https://reddit.com/r/DuckieTV" target="_blank">Reddit</a> or <a href="https://facebook.com/DuckieTV/" target="_blank">Facebook</a>.<br>If you find a bug, please report it on <a href="https://github.com/SchizoDuckie/DuckieTV/issues">Github</a></em>'
     var notifications = {
       '1.1.6': ['<li>Languages: (new) Greek, Turkish, Slovak and South African English.',
-        '<li>SearchEngines: (new) Add ETTV (ettv.tv), ETag (extratorrent.ag), IsoHunt2 (isohunt2.net), IdopeClone (idope.site), TGx (torrentgalaxy.org).',
-        '<li>SearchEngines: (del) Remove idope.',
-        '<li>Standalone: (upgrade) NWJS 33.3 with Chromium 69 and Node 10.10.0',
+        '<li>Languages: (fix) Chinese, Dutch.',
+        '<li>SearchEngines: (new) Add ETTV (www.ettvcentral.com), ETag (extratorrent.si), IsoHunt2 (isohunt.tv), TGx (torrentgalaxy.org), EXT (ext.to).',
+        '<li>SearchEngines: (fix) Katcr new domain (newkatcr.co), EzTVag new domain (eztv.io) and results, limetorrrents dl links, 1337x dl links, TPB (*0.org), TPB mirror resolver, RarBG details links.',
+        '<li>Standalone: (upgrade) NWJS 48.1 with Chromium 85',
         '<li>TorrentClient: (new) Introducing tTorrent client.',
+        '<li>TorrentClient: (fix) Replace deprecaded rTorrent calls, add support for qBitTorrent 4.2+.',
         '<li>TorrentMonitor: (fix) Auto-Stop-All now works as intended.',
         '<li>Misc: Bug fixes.'
       ].join('')
