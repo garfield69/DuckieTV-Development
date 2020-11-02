@@ -21,22 +21,32 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
         return date.toISOString().split('T')[0]
       },
 
-      update: function(from) {
-        return TraktTVv2.updated(service.getDateString(from)).then(function(results) {
-          var toUpdate = results.filter(function(res) {
-            if (!res || !res.tvdb_id) return false
-            return FavoritesService.favorites.filter(function(favorite) {
-              return favorite.TVDB_ID == res.tvdb_id && (favorite.lastupdated === null || new Date(favorite.lastupdated) < new Date(res.remote_updated))
-            }).length > 0
-          })
-          return $q.all(
-            toUpdate.map(function(serie) {
-              return TraktTVv2.serie(serie.trakt_id).then(function(serie) {
-                return FavoritesService.addFavorite(serie, undefined, undefined, true)
-              })
-            })
-          )
-        })
+      update: async function() {
+        var updatedCount = 0
+        var i = -1
+        var totalSeries = FavoritesService.favorites.length
+        for (var serie of FavoritesService.favorites) {
+          try {
+            i++
+            var newSerie = await TraktTVv2.serie(serie.TRAKT_ID, null, true)
+            var timeUpdated = new Date(newSerie.updated_at)
+            var serieLastUpdated = new Date(serie.lastupdated)
+
+            if (timeUpdated <= serieLastUpdated) {
+              continue // Hasn't been updated
+            }
+
+            console.log('[TraktTVUpdateService] [' + i + '/' + totalSeries + ']', 'updating', serie.name)
+            newSerie = await TraktTVv2.serie(newSerie.trakt_id, newSerie)
+            await FavoritesService.addFavorite(newSerie, undefined, undefined, true)
+            updatedCount++
+          } catch (err) {
+            console.error(err)
+            // ignored
+          }
+        }
+
+        return updatedCount
       },
 
       /**
@@ -97,8 +107,8 @@ DuckieTV.run(['TraktTVUpdateService', 'SettingsService',
 
       var lastUpdated = new Date(parseInt(localStorage.getItem('trakttv.lastupdated')))
       if ((parseInt(localStorage.getItem('trakttv.lastupdated')) + (1000 * 60 * 60 * tuPeriod)) /* hours */ <= localDateTime) {
-        TraktTVUpdateService.update(lastUpdated).then(function(result) {
-          console.info('TraktTV update check completed. ' + result.length + ' shows updated since ' + lastUpdated)
+        TraktTVUpdateService.update(lastUpdated).then(function(count) {
+          console.info('TraktTV update check completed. ' + count + ' shows updated since ' + lastUpdated)
           localStorage.setItem('trakttv.lastupdated', localDateTime)
         })
       } else {
