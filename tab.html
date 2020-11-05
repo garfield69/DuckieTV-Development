@@ -39,7 +39,7 @@
   <sidepanel>
     <div ui-view="sidePanel"></div>
   </sidepanel>
-  <query-monitor ng-class="{show: queryStats.writesQueued - queryStats.writesExecuted > 1}"></query-monitor>
+  <query-monitor></query-monitor>
   <fast-search></fast-search>
   <img class='printlogo' src='img/logo/icon64.png'>
 
@@ -211,8 +211,8 @@
   <script src="js/services/TorrentSearchEngines/1337x.js"></script>
   <script src="js/services/TorrentSearchEngines/ETag.js"></script>
   <script src="js/services/TorrentSearchEngines/ETTV.js"></script>
-  <script src="js/services/TorrentSearchEngines/EzTVag.js"></script>
   <script src="js/services/TorrentSearchEngines/EXT.js"></script>
+  <script src="js/services/TorrentSearchEngines/EzTVag.js"></script>
   <script src="js/services/TorrentSearchEngines/Idope.js"></script>
   <script src="js/services/TorrentSearchEngines/IsoHunt2.js"></script>
   <script src="js/services/TorrentSearchEngines/KATcr.js"></script>

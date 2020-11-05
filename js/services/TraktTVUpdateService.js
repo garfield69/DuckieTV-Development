@@ -4,8 +4,8 @@
  *
  * For API docs: check here: http://docs.trakt.apiary.io/#
  */
-DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService', 'FanartService',
-  function($q, TraktTVv2, FavoritesService, FanartService) {
+DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService', 'FanartService', '$rootScope',
+  function($q, TraktTVv2, FavoritesService, FanartService, $rootScope) {
     var service = {
       /**
        * Update shows in favorites list
@@ -25,12 +25,22 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
         var updatedCount = 0
         var i = -1
         var totalSeries = FavoritesService.favorites.length
+        $rootScope.$broadcast('TraktUpdateService:update', {
+          type: 'start',
+          payload: { total: totalSeries, current: 0 }
+        })
+
         for (var serie of FavoritesService.favorites) {
           try {
             i++
             var newSerie = await TraktTVv2.serie(serie.TRAKT_ID, null, true)
             var timeUpdated = new Date(newSerie.updated_at)
             var serieLastUpdated = new Date(serie.lastupdated)
+
+            $rootScope.$broadcast('TraktUpdateService:update', {
+              type: 'progress',
+              payload: { total: totalSeries, current: i, name: serie.name }
+            })
 
             if (timeUpdated <= serieLastUpdated) {
               continue // Hasn't been updated
@@ -45,6 +55,11 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
             // ignored
           }
         }
+
+        $rootScope.$broadcast('TraktUpdateService:update', {
+          type: 'finish',
+          payload: { total: totalSeries, current: i + 1 }
+        })
 
         return updatedCount
       },
@@ -131,7 +146,7 @@ DuckieTV.run(['TraktTVUpdateService', 'SettingsService',
       setTimeout(updateFunc, 1000 * 60 * 60 * tuPeriod) // schedule update check every tuPeriod hour(s) for long running apps.
     }
 
-    setTimeout(updateFunc, 8000)
+    setTimeout(updateFunc, 7000)
   }
 ])
 
