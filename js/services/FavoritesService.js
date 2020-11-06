@@ -113,14 +113,14 @@ DuckieTV.factory('FavoritesService', ['$q', '$rootScope', 'FanartService', '$inj
       }
       data.absolute = (serie.isAnime()) ? data.number_abs : null
 
+      episode.filename = FanartService.getEpisodePoster(fanart)
+      episode.seasonnumber = season.seasonnumber
       for (var i in data) {
         if ((i in episode)) {
-          if (episode[i] !== data[i]) console.debug('episode S' + episode.seasonnumber + 'E' + data.episodenumber + i + '=[' + data[i] + ']')
+          if (episode[i] !== data[i]) console.debug('episode S' + episode.seasonnumber + 'E' + data.episodenumber  + ' ' + i + '=[' + data[i] + ']')
           episode[i] = data[i]
         }
       }
-      episode.filename = FanartService.getEpisodePoster(fanart)
-      episode.seasonnumber = season.seasonnumber
       // if there's an entry for the episode in watchedEpisodes, this is a backup restore
       watched.map(function(el) {
         if (el.TVDB_ID == episode.TVDB_ID) {
