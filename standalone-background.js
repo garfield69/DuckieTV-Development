@@ -20,7 +20,7 @@ if (!CRUD) var CRUD = {
     }
 };
 
-/** 
+/**
  * Turn CRUD.stats into a proxy object with dynamic getters and setters (pipes to _log)
  * This way, we can fire events async
  */
@@ -51,7 +51,7 @@ Object.defineProperty(CRUD.stats, 'writesExecuted', {
 
 
 
-/** 
+/**
  * The main object proxy that returns either a fresh entity object or a promise that loads data, when you pass the primary key value to search for.
  *
  * The main idea behind this is that you can do:
@@ -200,7 +200,7 @@ CRUD.EntityManager = (function() {
         return this.entities[className].defaultValues;
     };
 
-    /** 
+    /**
      * Set and initialize the connection adapter.
      */
     this.setAdapter = function(adapter) {
@@ -274,7 +274,7 @@ CRUD.Find = function(obj, filters, options) {
     });
 };
 
-/** 
+/**
  * Uses CRUD.find with a limit 0,1 and returns the first result.
  * @returns Promise
  */
@@ -343,7 +343,7 @@ CRUD.Entity.prototype = {
         return this.__values__;
     },
 
-    /** 
+    /**
      * Proxy find function, that can be run on the entity instance itself.
      * Makes sure you can create object A, and find just relations connected to it.
      * example:
@@ -495,7 +495,7 @@ CRUD.Entity.prototype = {
     },
 
 
-    /** 
+    /**
      * Connect 2 entities regardles of their relationship type.
      * Pass the object you want to connect this entity to to this function and
      * this will find out what it needs to do to set the correct properties in your persistence layer.
@@ -833,7 +833,7 @@ CRUD.SQLiteAdapter = function(database, dbOptions) {
             }
         }
 
-        // iterate all fields changed 
+        // iterate all fields changed
         Object.keys(what.__dirtyValues__).map(mapValues);
         // add defaults
         Object.keys(CRUD.EntityManager.entities[what.getType()].defaultValues).map(mapChangedValues);
@@ -909,7 +909,7 @@ CRUD.Database = function(name, options) {
 
     var queryQueue = [];
 
-    /** 
+    /**
      * Execute a db query and promise a resultset.
      * Queries are queue up based upon if they are insert or select queries.
      * selects get highest priority to not lock the UI when batch inserts or updates
@@ -1012,7 +1012,7 @@ CRUD.Database.SQLBuilder = function(entity, filters, options) {
         this.groups.push(this.options.groupBy.replace('GROUP BY', ''));
     }
 
-    this.limit = this.options.limit ? 'LIMIT ' + options.limit : 'LIMIT 0,1000';
+    this.limit = this.options.limit ? 'LIMIT ' + options.limit : 'LIMIT 0,2000';
 
     (this.options.justthese || CRUD.EntityManager.entities[this.entity].fields).map(function(field) {
         this.fields.push(this.getFieldName(field));
@@ -1845,7 +1845,7 @@ chrome.runtime.onConnect.addListener(function(port) {
     }
   })
 });
-/** 
+/**
  * Make sure migrations don't run on the latest versions.
  */
 chrome.runtime.onInstalled.addListener(function(details) {
