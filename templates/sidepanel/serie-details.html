@@ -9,7 +9,7 @@
         <i class="glyphicon glyphicon-eye-close" ></i> {{::sidepanel.serie.notWatchedCount}}
       </em>
       <em ng-show="!sidepanel.serie.displaycalendar" class="badge leftbadge"  tooltip-placement="bottom" tooltip-append-to-body="true" uib-tooltip="{{'COMMON/series-hidden/tooltip'|translate}}">
-        <i class="glyphicon glyphicon-ban-circle" style="color:white !important"></i> 
+        <i class="glyphicon glyphicon-ban-circle" style="color:white !important"></i>
       </em>
     </div>
     <table class="metadata" width="100%" border="0" style="margin-top: 10px">
@@ -29,7 +29,7 @@
         </tr>
         <tr>
           <th>IDS</th>
-          <td>TVDB <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.TVDB_ID.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.TVDB_ID}}</a>, TRAKT {{::sidepanel.serie.TRAKT_ID}},<br/>IMDB {{::sidepanel.serie.IMDB_ID}}</td>
+          <td>TVDB <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.TVDB_ID.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.TVDB_ID}}</a>, TRAKT <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.TRAKT_ID.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.TRAKT_ID}}</a>,<br/>IMDB <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.IMDB_ID.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.IMDB_ID}}</a></td>
         </tr>
         <tr>
           <th translate-once>COMMON/airs-on/hdr</th>
@@ -104,7 +104,7 @@
             </div>
             <h1 style="margin:10px 0 10px 0" ng-if="sidepanel.totalWatchedTime">{{sidepanel.totalWatchedLbl}}</h1>
             <h3 translate-once>SIDEPANEL/SERIE-DETAILS/which-is/hdr</h3>
-              <div style="position:relative" ng-show="!sidepanel.totalRunTime">     
+              <div style="position:relative" ng-show="!sidepanel.totalRunTime">
                 <h3 style="margin:5px 0 5px 0"><h3cont translate-once>SIDEPANEL/SERIE-DETAILS/calculating/hdr</h3cont>
                 <loading-spinner class="small" style="margin:-2px 0 0 5px;position:absolute"></loading-spinner>
               </h3>
@@ -115,4 +115,4 @@
         </tr>
       </tbody>
     </table>
-</div>  
+</div>
