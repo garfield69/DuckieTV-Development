@@ -60,8 +60,8 @@ DuckieTV.factory('FavoritesManager', ['FavoritesService', 'TraktTVv2', '$rootSco
         })
       },
 
-      isAdding: function(serie) {
-        return FavoritesService.isAdding(serie)
+      isAdding: function(trakt_id) {
+        return FavoritesService.isAdding(trakt_id)
       },
 
       getById: function(id) {
