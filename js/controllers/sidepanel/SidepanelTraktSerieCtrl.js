@@ -17,6 +17,11 @@ DuckieTV.controller('sidepanelTraktSerieCtrl', ['serie', 'SidePanelState', 'Favo
       SidePanelState.hide()
     }
 
+    vm.dataToClipboard = function(data) {
+      var clip = nw.Clipboard.get()
+      clip.set(data.replace(/\|/g, '\r\n'), 'text')
+    }
+
     // Add to favorites, navigate to the show details
     vm.selectSerie = function() {
       return FavoritesManager.add(vm.serie).then(function() {

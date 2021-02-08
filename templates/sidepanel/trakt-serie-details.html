@@ -32,6 +32,10 @@
           </div>
         </td>
       </tr>
+        <tr>
+          <th>IDS</th>
+          <td>TVDB <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.tvdb_id.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.tvdb_id}}</a>, TRAKT <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.trakt_id.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.trakt_id}}</a>,<br/>IMDB <a style="text-decoration: underline;cursor:normal" ng-click="sidepanel.dataToClipboard(sidepanel.serie.imdb_id.toString())" uib-tooltip="Copy to Clipboard" tooltip-append-to-body="true">{{::sidepanel.serie.imdb_id}}</a></td>
+        </tr>
       <tr ng-if="sidepanel.serie.airs.day" >
         <th translate-once>COMMON/airs-on/hdr</th>
         <td>{{sidepanel.translateDayOfWeek(sidepanel.serie.airs.day)}} {{sidepanel.serie.airs.time}} {{sidepanel.serie.airs.timezone}}</td>
