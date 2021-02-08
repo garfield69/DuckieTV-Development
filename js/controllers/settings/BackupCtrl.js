@@ -90,7 +90,7 @@ DuckieTV.controller('BackupCtrl', ['$rootScope', '$scope', '$filter', 'BackupSer
           angular.forEach(result.settings, function(value, key) {
             if (key === 'utorrent.token') return // skip utorrent auth token since it can be invalid.
             if (key === 'useTrakt_id') {
-              // flag indicating series id is a trakt_id and not a tvdb_id (included in version after 1.1.5)
+              // flag indicating series id is a trakt_id and not a tvdb_id (included in versions after 1.1.5)
               useTrakt_id = true
               TRAKTorTVDB_LBL = 'TRAKT_ID'
               return // skip since this is not a localStorage key.

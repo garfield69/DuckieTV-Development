@@ -9,7 +9,7 @@ DuckieTV.factory('TraktTVTrending', ['TraktTVv2', 'FavoritesService', '$q',
     * enables excluding series already in favourites from trending results
     */
     var alreadyAddedSerieFilter = function(serie) {
-      return FavoritesService.favoriteIDs.indexOf(serie.tvdb_id.toString()) === -1
+      return FavoritesService.favoriteIDs.indexOf(serie.trakt_id.toString()) === -1
     }
 
     var service = {
