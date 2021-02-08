@@ -133,8 +133,8 @@ DuckieTV.controller('SidepanelSerieCtrl', ['$rootScope', '$filter', '$state', '$
     /**
      * Returns true as long as the add a show to favorites promise is running.
      */
-    vm.isAdding = function(tvdb_id) {
-      return FavoritesService.isAdding(tvdb_id)
+    vm.isAdding = function(trakt_id) {
+      return FavoritesService.isAdding(trakt_id)
     }
 
     vm.dataToClipboard = function(data) {
