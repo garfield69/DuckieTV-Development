@@ -40,12 +40,6 @@ DuckieTV.factory('TraktTVTrending', ['TraktTVv2', 'FavoritesService', '$q',
         }
       },
 
-      getById: function(tvdb_id) {
-        return vm.trending.filter(function(el) {
-          return el.tvdb_id == tvdb_id
-        })[0]
-      },
-
       getByTraktId: function(trakt_id) {
         return vm.trending.filter(function(el) {
           return el.trakt_id == trakt_id

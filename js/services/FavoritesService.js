@@ -11,14 +11,14 @@ DuckieTV.factory('FavoritesService', ['$q', '$rootScope', 'FanartService', '$inj
      */
     var addToFavoritesList = function(serie) {
       var existing = service.favorites.filter(function(el) {
-        return el.TVDB_ID == serie.TVDB_ID
+        return el.TRAKT_ID == serie.TRAKT_ID
       })
       if (existing.length === 0) {
         service.favorites.push(serie)
       } else {
         service.favorites[service.favorites.indexOf(existing[0])] = serie
       }
-      service.favoriteIDs.push(serie.TVDB_ID.toString())
+      service.favoriteIDs.push(serie.TRAKT_ID.toString())
     }
 
     /**
@@ -243,7 +243,7 @@ DuckieTV.factory('FavoritesService', ['$q', '$rootScope', 'FanartService', '$inj
           })
         }
 
-        var serie = (useTrakt_id) ? service.getByTRAKT_ID(data.trakt_id) : service.getById(data.tvdb_id) || new Serie()
+        var serie = (useTrakt_id) ? service.getByTRAKT_ID(data.trakt_id) : service.getByTVDB_ID(data.tvdb_id) || new Serie()
 
         return FanartService.get(data.tvdb_id, refreshFanart).then(function(fanart) {
           fanart = (fanart && 'json' in fanart) ? fanart.json : {}
@@ -273,18 +273,6 @@ DuckieTV.factory('FavoritesService', ['$q', '$rootScope', 'FanartService', '$inj
             })
         })
       },
-      /**
-       * Helper function to fetch all the episodes for a serie
-       * Optionally, filters can be provided which will be turned into an SQL where.
-       */
-      getEpisodes: function(serie, filters) {
-        serie = serie instanceof CRUD.Entity ? serie : this.getById(serie)
-        return serie.Find('Episode', filters || {}).then(function(episodes) {
-          return episodes
-        }, function() {
-          console.error('Error in getEpisodes', serie, filters || {})
-        })
-      },
       waitForInitialization: function() {
         return $q(function(resolve) {
           function waitForInitialize() {
@@ -305,10 +293,7 @@ DuckieTV.factory('FavoritesService', ['$q', '$rootScope', 'FanartService', '$inj
           })
         })
       },
-      /**
-       * Find a serie by it's TVDB_ID (the main identifier for series since they're consistent regardless of local config)
-       */
-      getById: function(id) {
+      getByTVDB_ID: function(id) {
         return service.favorites.filter(function(el) {
           return el.TVDB_ID == id
         })[0]

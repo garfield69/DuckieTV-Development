@@ -78,7 +78,7 @@ DuckieTV.factory('CalendarEvents', ['$rootScope', 'FavoritesService', 'SettingsS
           for (var index = eventList.length - 1; index > -1; index--) {
             if (eventList[index].episodeID === duplicateID) {
               calendarEvents[aDate].splice(index, 1)
-              delete seriesForDate[aDate][eventList[index].TVDB_ID]
+              delete seriesForDate[aDate][eventList[index].TRAKT_ID]
               return
             }
           }
