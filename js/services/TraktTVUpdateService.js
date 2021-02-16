@@ -105,16 +105,17 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
           })
         })
       },
-      trakttvdb: async function(traktStart,traktEnd) {
+
+      updateTraktTvdbXref: async function(traktStart, traktEnd) {
         console.debug('starting Trakt->TVDB')
         var out = {}
         for (var trakt = traktStart; trakt < traktEnd; trakt++) {
           try {
             var newSerie = await TraktTVv2.serie2(trakt)
-            if (newSerie.tvdb_id != 0) {
+            if (newSerie.tvdb_id != 0 && newSerie.tvdb_id != null) {
               out[newSerie.trakt_id] = newSerie.tvdb_id
             } else {
-              out[newSerie.trakt_id] = newSerie.slug_id
+              out[newSerie.trakt_id] = 0
             }
             console.debug('found ',newSerie.trakt_id, newSerie.title, newSerie.tvdb_id)
           } catch (err) {
@@ -169,9 +170,6 @@ DuckieTV.run(['TraktTVUpdateService', 'SettingsService',
     }
 
     setTimeout(updateFunc, 7000)
-
-    // set range of trakt records to fetch and extract the tvdbid, output -> console.
-   //TraktTVUpdateService.trakttvdb(173829,174000)
 
   }
 ])

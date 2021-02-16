@@ -70,6 +70,13 @@ DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver',
         return (traktID in traktidTvdbidXref) ? traktidTvdbidXref[traktID] : 0
       },
 
+      /**
+       * Return last TRAKT_ID in traktidTvdbidXref
+       */
+      getLastTraktidXref: function() {
+        return parseInt(Object.keys(traktidTvdbidXref)[Object.keys(traktidTvdbidXref).length-1])
+      },
+
       initialize: function() {
         var lastFetched = ('snrt.lastFetched' in localStorage) ? new Date(parseInt(localStorage.getItem('snrt.lastFetched'))) : new Date()
 
@@ -89,7 +96,7 @@ DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver',
             localStorage.setItem('snrt.date-exceptions', JSON.stringify(episodesWithDateFormat))
           })
 
-          $http.get('https://duckietv.github.io/SceneNameExceptions/Trakt_ID-TVDB_ID.json').then(function(response) {
+          $http.get('https://duckietv.github.io/SceneNameExceptions/TraktidTvdbidXref.json').then(function(response) {
             traktidTvdbidXref = response.data
             localStorage.setItem('snrt.traktid-tvdbid-xref', JSON.stringify(traktidTvdbidXref))
             localStorage.setItem('snrt.lastFetched', new Date().getTime())
@@ -102,10 +109,12 @@ DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver',
   }
 ])
 
-DuckieTV.run(['SceneNameResolver',
-  function(SceneNameResolver) {
+DuckieTV.run(['SceneNameResolver', 'TraktTVUpdateService',
+  function(SceneNameResolver, TraktTVUpdateService) {
     SceneNameResolver.initialize()
-    //console.debug('test lookup traktid=1, tvdbid=%s', SceneNameResolver.getTvdbidFromTraktid(1))
-    //console.debug('test lookup traktid=999999, tvdbid=%s', SceneNameResolver.getTvdbidFromTraktid(999999))
+    // set range of trakt records to fetch and extract the tvdbid, output -> console.
+    var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
+    var lastTraktid = firstTraktid + 100
+    TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
   }
 ])
