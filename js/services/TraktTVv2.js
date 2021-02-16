@@ -16,6 +16,7 @@ DuckieTV.factory('TraktTVv2', ['$q', '$http',
     var endpoints = {
       people: 'shows/%s/people',
       serie: 'shows/%s?extended=full',
+      serie2: 'shows/%s',
       seasons: 'shows/%s/seasons?extended=full',
       episodes: 'shows/%s/seasons/%s/episodes?extended=full',
       search: 'search/show?extended=full&limit=100&fields=title,aliases&query=%s',
@@ -86,6 +87,9 @@ DuckieTV.factory('TraktTVv2', ['$q', '$http',
        * @return serie parsed serie
        */
       serie: function(result) {
+        return parsers.trakt(result.data)
+      },
+      serie2: function(result) {
         return parsers.trakt(result.data)
       },
       tvdb_id: function(result) {
@@ -210,8 +214,32 @@ DuckieTV.factory('TraktTVv2', ['$q', '$http',
           })
         }
 
+        if (err.status == 502) {
+          // cloudflare bad gateway, look at headers to see when we should try again otherwise just wait for a few seconds
+          var headers = err && err.headers ? err.headers() : {}
+          var retryAfterSeconds = +headers['retry-after']
+          retryAfterSeconds  = retryAfterSeconds ? retryAfterSeconds * 1000 : 3000
+          console.error('cloudflare bad gateway, trying again in', retryAfterSeconds)
+
+          return delay(retryAfterSeconds).then(function() {
+            return promiseRequest(type, param, param2, promise)
+          })
+        }
+
+        if (err.status == 504) {
+          // cloudflare gateway timeout, look at headers to see when we should try again otherwise just wait for a few seconds
+          var headers = err && err.headers ? err.headers() : {}
+          var retryAfterSeconds = +headers['retry-after']
+          retryAfterSeconds  = retryAfterSeconds ? retryAfterSeconds * 1000 : 3000
+          console.error('cloudflare gateway timeout, trying again in', retryAfterSeconds)
+
+          return delay(retryAfterSeconds).then(function() {
+            return promiseRequest(type, param, param2, promise)
+          })
+        }
+
         if (err.status !== 0) { // only if this is not a cancelled request, rethrow
-          console.error('Trakt tv error!', err)
+          //console.error('Trakt tv error!', err)
           throw 'Error ' + err.status + ':' + err.statusText
         }
       })
@@ -235,6 +263,16 @@ DuckieTV.factory('TraktTVv2', ['$q', '$http',
           service.renewToken()
           // restart request and return original promise
           return performPost(type, param)
+        }
+        if (err.status == 429) {
+          // rate limited
+          var headers = err && err.headers ? err.headers() : {}
+          var retryAfterSeconds = +headers['retry-after']
+          retryAfterSeconds  = retryAfterSeconds ? retryAfterSeconds * 1000 : 3000
+          console.error('rate limited! trying again in', retryAfterSeconds)
+          return delay(retryAfterSeconds).then(function() {
+            return performPost(type, param)
+          })
         }
         if (err.status !== 0) { // only if this is not a cancelled request, rethrow
           console.error('Trakt tv error!', err)
@@ -272,6 +310,14 @@ DuckieTV.factory('TraktTVv2', ['$q', '$http',
           return serie
         } catch (err) {
           rethrow(err)
+        }
+      },
+      serie2: async function(id) {
+        try {
+          var serie = await promiseRequest('serie2', id)
+          return serie
+        } catch (err) {
+            rethrow(err)
         }
       },
       /**

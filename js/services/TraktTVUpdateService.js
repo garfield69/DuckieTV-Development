@@ -4,8 +4,8 @@
  *
  * For API docs: check here: http://docs.trakt.apiary.io/#
  */
-DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService', 'FanartService', '$rootScope',
-  function($q, TraktTVv2, FavoritesService, FanartService, $rootScope) {
+DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService', 'FanartService', '$rootScope','NotificationService',
+  function($q, TraktTVv2, FavoritesService, FanartService, $rootScope,NotificationService) {
     var service = {
       /**
        * Update shows in favorites list
@@ -104,6 +104,28 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
             return true
           })
         })
+      },
+      trakttvdb: async function(traktStart,traktEnd) {
+        console.debug('starting Trakt->TVDB')
+        var out = {}
+        for (var trakt = traktStart; trakt < traktEnd; trakt++) {
+          try {
+            var newSerie = await TraktTVv2.serie2(trakt)
+            if (newSerie.tvdb_id != 0) {
+              out[newSerie.trakt_id] = newSerie.tvdb_id
+            } else {
+              out[newSerie.trakt_id] = newSerie.slug_id
+            }
+            console.debug('found ',newSerie.trakt_id, newSerie.title, newSerie.tvdb_id)
+          } catch (err) {
+            // ignored
+          }
+        }
+        console.debug('[Trakt->TVDB]', JSON.stringify(out))
+        NotificationService.notify(
+            "Extract Trakt-tvdb done:",
+            ["For ", traktStart, " - " , traktEnd, " Torrent"].join(' ')
+        )
       }
     }
 
@@ -147,6 +169,10 @@ DuckieTV.run(['TraktTVUpdateService', 'SettingsService',
     }
 
     setTimeout(updateFunc, 7000)
+
+    // set range of trakt records to fetch and extract the tvdbid, output -> console.
+   //TraktTVUpdateService.trakttvdb(173829,174000)
+
   }
 ])
 
