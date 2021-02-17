@@ -109,13 +109,14 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
       updateTraktTvdbXref: async function(traktStart, traktEnd) {
         console.debug('starting Trakt->TVDB')
         var out = {}
+        var out0 = {}
         for (var trakt = traktStart; trakt < traktEnd; trakt++) {
           try {
             var newSerie = await TraktTVv2.serie2(trakt)
             if (newSerie.tvdb_id != 0 && newSerie.tvdb_id != null) {
               out[newSerie.trakt_id] = newSerie.tvdb_id
             } else {
-              out[newSerie.trakt_id] = 0
+              out0[newSerie.trakt_id] = 0
             }
             console.debug('found ',newSerie.trakt_id, newSerie.title, newSerie.tvdb_id)
           } catch (err) {
@@ -123,6 +124,7 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
           }
         }
         console.debug('[Trakt->TVDB]', JSON.stringify(out))
+        console.debug('[Trakt->TVDB=0]', JSON.stringify(out0))
         NotificationService.notify(
             "Extract Trakt-tvdb done:",
             ["For ", traktStart, " - " , traktEnd, " Torrent"].join(' ')
