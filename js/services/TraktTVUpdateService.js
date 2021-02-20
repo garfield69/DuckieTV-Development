@@ -107,7 +107,6 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
       },
 
       updateTraktTvdbXref: async function(traktStart, traktEnd) {
-        console.debug('starting Trakt->TVDB')
         var out = {}
         var out0 = {}
         for (var trakt = traktStart; trakt < traktEnd; trakt++) {

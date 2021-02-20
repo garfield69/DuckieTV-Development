@@ -84,6 +84,7 @@ DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver',
           exceptions = JSON.parse(localStorage.getItem('snrt.name-exceptions'))
           episodesWithDateFormat = JSON.parse(localStorage.getItem('snrt.date-exceptions'))
           traktidTvdbidXref = JSON.parse(localStorage.getItem('snrt.traktid-tvdbid-xref'))
+          console.info('Next SNRT update is due after ', new Date(lastFetched.getTime() + 86400000))
           console.info('Fetched SNRT name and date exceptions, and TraktTvdbXref from localStorage.')
         } else {
           $http.get('https://duckietv.github.io/SceneNameExceptions/TraktSceneNameExceptions.json').then(function(response) {
@@ -115,6 +116,6 @@ DuckieTV.run(['SceneNameResolver', 'TraktTVUpdateService',
     // set range of trakt records to fetch and extract the tvdbid, output -> console.
     var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
     var lastTraktid = firstTraktid + 100
-    TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
+    //TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
   }
 ])
