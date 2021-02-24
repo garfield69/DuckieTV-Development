@@ -2,8 +2,8 @@
  * Scene name provider
  * Converts Trakt series names into scene torrent names that you can use on search engines.
  */
-DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver',
-  function($q, $http, SceneXemResolver) {
+DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver', 'TraktTVUpdateService',
+  function($q, $http, SceneXemResolver, TraktTVUpdateService) {
     // credits to Sickbeard's exception list https://raw.github.com/midgetspy/sb_tvdb_scene_exceptions/gh-pages/exceptions.txt
     //
     // filters applied:
@@ -101,21 +101,22 @@ DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver',
             traktidTvdbidXref = response.data
             localStorage.setItem('snrt.traktid-tvdbid-xref', JSON.stringify(traktidTvdbidXref))
             localStorage.setItem('snrt.lastFetched', new Date().getTime())
+            console.info('Updated localStorage with SNRT name and date exceptions, and TraktTvdbXref.')
+
+            // set range of trakt records to fetch and extract the tvdbid, output -> console.
+            var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
+            var lastTraktid = firstTraktid + 100
+            TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
           })
 
-          console.info('Updated localStorage with SNRT name and date exceptions, and TraktTvdbXref.')
         }
       }
     }
   }
 ])
 
-DuckieTV.run(['SceneNameResolver', 'TraktTVUpdateService',
-  function(SceneNameResolver, TraktTVUpdateService) {
+DuckieTV.run(['SceneNameResolver',
+  function(SceneNameResolver) {
     SceneNameResolver.initialize()
-    // set range of trakt records to fetch and extract the tvdbid, output -> console.
-    var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
-    var lastTraktid = firstTraktid + 100
-    //TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
   }
 ])
