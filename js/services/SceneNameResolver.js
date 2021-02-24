@@ -2,8 +2,8 @@
  * Scene name provider
  * Converts Trakt series names into scene torrent names that you can use on search engines.
  */
-DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver', 'TraktTVUpdateService',
-  function($q, $http, SceneXemResolver, TraktTVUpdateService) {
+DuckieTV.factory('SceneNameResolver', ['$rootScope', '$q', '$http', 'SceneXemResolver',
+  function($rootScope, $q, $http, SceneXemResolver) {
     // credits to Sickbeard's exception list https://raw.github.com/midgetspy/sb_tvdb_scene_exceptions/gh-pages/exceptions.txt
     //
     // filters applied:
@@ -102,11 +102,7 @@ DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver', 'Trakt
             localStorage.setItem('snrt.traktid-tvdbid-xref', JSON.stringify(traktidTvdbidXref))
             localStorage.setItem('snrt.lastFetched', new Date().getTime())
             console.info('Updated localStorage with SNRT name and date exceptions, and TraktTvdbXref.')
-
-            // set range of trakt records to fetch and extract the tvdbid, output -> console.
-            var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
-            var lastTraktid = firstTraktid + 100
-            TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
+            $rootScope.$broadcast('snrt:updated')
           })
 
         }
@@ -115,8 +111,14 @@ DuckieTV.factory('SceneNameResolver', ['$q', '$http', 'SceneXemResolver', 'Trakt
   }
 ])
 
-DuckieTV.run(['SceneNameResolver',
-  function(SceneNameResolver) {
+DuckieTV.run(['$rootScope', 'SceneNameResolver', 'TraktTVUpdateService',
+  function($rootScope, SceneNameResolver, TraktTVUpdateService) {
+    $rootScope.$on('snrt:updated', function(event) {
+        // set range of trakt records to fetch and extract the tvdbid, output -> console.
+        var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
+        var lastTraktid = firstTraktid + 100
+        TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
+    })
     SceneNameResolver.initialize()
   }
 ])
