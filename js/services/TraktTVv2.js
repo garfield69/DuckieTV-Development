@@ -4,8 +4,8 @@
  *
  * For API docs: check here: http://docs.trakt.apiary.io/#
  */
-DuckieTV.factory('TraktTVv2', ['$q', '$http',
-  function($q, $http) {
+DuckieTV.factory('TraktTVv2', ['$q', '$http', 'SceneNameResolver',
+  function($q, $http, SceneNameResolver) {
     var activeSearchRequest = false
     var activeTrendingRequest = false
 
@@ -44,6 +44,8 @@ DuckieTV.factory('TraktTVv2', ['$q', '$http',
         if ('title' in show) {
           show.name = show.title
         }
+        // tvdb_id may be missing from Trakt.tv API beginning march 2021
+        show.tvdb_id = ('tvdb_id' in show && show.tvdb_id !== null && show.tvdb_id !== 0) ? show.tvdb_id : SceneNameResolver.getTvdbidFromTraktid(show.trakt_id)
         return show
       },
       people: function(result) {
@@ -368,7 +370,7 @@ DuckieTV.factory('TraktTVv2', ['$q', '$http',
           if (!localStorage.getItem('trakttv.trending.cache')) {
             return $http.get('trakt-trending-500.json').then(function(result) {
               var output = result.data.filter(function(show) {
-                if (show.tvdb_id) return true
+                if (show.trakt_id) return true
               })
               localStorage.setItem('trakttv.trending.cache', JSON.stringify(output))
               return output
