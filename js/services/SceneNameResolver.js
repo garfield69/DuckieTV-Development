@@ -67,6 +67,7 @@ DuckieTV.factory('SceneNameResolver', ['$rootScope', '$q', '$http', 'SceneXemRes
        */
       getTvdbidFromTraktid: function(traktID) {
         traktID = parseInt(traktID)
+        if (traktID in traktidTvdbidXref) console.info('TraktidTvdbidXref: Found tvdbid %s from traktid %s', traktidTvdbidXref[traktID], traktID)
         return (traktID in traktidTvdbidXref) ? traktidTvdbidXref[traktID] : null
       },
 
