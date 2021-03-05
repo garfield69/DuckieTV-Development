@@ -125,7 +125,7 @@ DuckieTorrent.factory('Aria2Remote', ['BaseTorrentRemote',
               jsonObject.result.map(function(tellResults) {
                 tellResults.map(function(torrentList) {
                   torrentList.map(function(torrent) {
-                    console.debug(torrent)
+                    //console.debug(torrent)
                     if ((torrent.bitfield && torrent.bitfield !== '80' && torrent.bitfield !== 'c0') && (torrent.status && torrent.status !== 'removed')) {
                       // not interested in completed metadata records (bitfield 80 or c0), or removed torrents
                       torrents.push(torrent)
