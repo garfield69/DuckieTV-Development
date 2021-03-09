@@ -67,7 +67,7 @@ CRUD.executeQuery('select distinct(ID_Serie) from Series').then(function(res) {
     res.rows.map(function(row) {
         serieIds.push(row.ID_Serie)
     })
-    
+
     CRUD.executeQuery('delete from Episodes where ID_Serie not in ('+serieIds.join(',')+') ').then(function(res) {
         console.log('done!', res.rowsAffected, 'items deleted!')
     });
@@ -89,7 +89,7 @@ localStorage.clear();
 ```javascript
 localStorage.setItem('trakttv.lastupdated', new Date('2015-01-15').getTime())
 CRUD.executeQuery("update series set lastupdated = '2015-01-05'").then(function(result) { console.log(result); })
-// or even 
+// or even
 // CRUD.executeQuery("delete from episodes where 1").then(function(result) { console.log(result); })
 // reload page
 ```
@@ -97,4 +97,13 @@ CRUD.executeQuery("update series set lastupdated = '2015-01-05'").then(function(
 
 ```javascript
 CRUD.executeQuery("update episodes set downloaded = 1 where watched == 1").then(function(result) { console.log(result); })
+```
+
+## removing the snrt tables to force a reload from GitHub
+
+```javascript
+localStorage.removeItem('snrt.name-exceptions')
+localStorage.removeItem('snrt.date-exceptions')
+localStorage.removeItem('snrt.lastFetched')
+localStorage.removeItem('snrt.traktid-tvdbid-xref')
 ```
