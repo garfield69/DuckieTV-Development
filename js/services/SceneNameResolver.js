@@ -63,6 +63,13 @@ DuckieTV.factory('SceneNameResolver', ['$rootScope', '$q', '$http', 'SceneXemRes
       },
 
       /**
+       * returns an array of the traktids in the xref table
+       */
+      getTraktidsFromXref: function() {
+        return Object.keys(traktidTvdbidXref)
+      },
+
+      /**
        * Return a TVDB_ID given the provided TRAKT_ID if it's in the list or null.
        */
       getTvdbidFromTraktid: function(traktID) {
@@ -87,6 +94,7 @@ DuckieTV.factory('SceneNameResolver', ['$rootScope', '$q', '$http', 'SceneXemRes
           traktidTvdbidXref = JSON.parse(localStorage.getItem('snrt.traktid-tvdbid-xref'))
           console.info('Next SNRT update is due after ', new Date(lastFetched.getTime() + 86400000))
           console.info('Fetched SNRT name and date exceptions, and TraktTvdbXref from localStorage.')
+          $rootScope.$broadcast('snrt:loaded')
         } else {
           $http.get('https://duckietv.github.io/SceneNameExceptions/TraktSceneNameExceptions.json').then(function(response) {
             exceptions = response.data
@@ -116,9 +124,14 @@ DuckieTV.run(['$rootScope', 'SceneNameResolver', 'TraktTVUpdateService',
   function($rootScope, SceneNameResolver, TraktTVUpdateService) {
     $rootScope.$on('snrt:updated', function(event) {
         // set range of trakt records to fetch and extract the tvdbid, output -> console.
-        var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
+        //var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1 // for use with xrefcomplete
+        var firstTraktid = 176102 + 1
         var lastTraktid = firstTraktid + 100
         TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
+    })
+    $rootScope.$on('snrt:loaded', function(event) {
+        // check if any of the Xref have now been added to trakt.tv records on the servers
+        TraktTVUpdateService.trimTraktTvdbXref(SceneNameResolver.getTraktidsFromXref())
     })
     SceneNameResolver.initialize()
   }

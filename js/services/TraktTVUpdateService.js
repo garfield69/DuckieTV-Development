@@ -126,9 +126,35 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
         console.debug('[Trakt->TVDB=0]', JSON.stringify(out0))
         NotificationService.notify(
             "Extract Trakt-tvdb done:",
-            ["For ", traktStart, " - " , traktEnd, " Torrent"].join(' ')
+            ["For ", traktStart, " - " , traktEnd - 1, " Torrent"].join(' ')
+        )
+      },
+
+      trimTraktTvdbXref: async function(XrefTraktids) {
+        var traktStart = 0
+        var traktEnd = XrefTraktids.length - 1
+        for (var trakt = traktStart; trakt < traktEnd; trakt++) {
+          var traktid = XrefTraktids[trakt]
+          try {
+            var newSerie = await TraktTVv2.serie2(traktid)
+            if (newSerie.tvdb_id != 0 && newSerie.tvdb_id != null) {
+              // note: TraktTVv2.serie2 will supplement tvdbid from existing xref table
+              console.debug('[',trakt,'of',traktEnd,']',XrefTraktids[trakt],'has tvdbid',newSerie.tvdb_id)
+            } else {
+              // this is a genuine missing tvdbid, not in trakt.tv or existing xref table
+              console.debug('[',trakt,'of',traktEnd,']',XrefTraktids[trakt],'does not have a tvdbid')
+            }
+          } catch (err) {
+            // ignored
+          }
+        }
+        console.debug('trimTraktTvdbXref finished')
+        NotificationService.notify(
+            "Extract trimTraktTvdbXref done:",
+            ["For ", XrefTraktids[traktStart], " - " , XrefTraktids[traktEnd - 1], " Torrent"].join(' ')
         )
       }
+
     }
 
     return service
