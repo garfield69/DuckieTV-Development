@@ -7,7 +7,7 @@ describe('CalendarEvents', function() {
 
         Object.keys(events).map(function(date) {
             events[date].map(function(value, key) {
-                FavoritesService.favoriteIDs.push(value.serie.TVDB_ID.toString());
+                FavoritesService.favoriteIDs.push(value.serie.TRAKT_ID.toString());
                 events[date][key].serie = CRUD.fromCache(Serie, value.serie);
                 events[date][key].episode = CRUD.fromCache(Episode, value.episode);
             });
@@ -19,7 +19,7 @@ describe('CalendarEvents', function() {
         var events = fixture('calendarupdate');
 
         events.serie = CRUD.fromCache(Serie, events.serie);
-        FavoritesService.favoriteIDs.push(events.serie.TVDB_ID.toString());
+        FavoritesService.favoriteIDs.push(events.serie.TRAKT_ID.toString());
 
         Object.keys(events.episodes).map(function(id) {
             events.episodes[id] = CRUD.fromCache(Episode, events.episodes[id]);
@@ -89,7 +89,7 @@ describe('CalendarEvents', function() {
          * (For instance, while DELETE queries are still running)
          */
 
-        // call setEvents for each date array 
+        // call setEvents for each date array
         var fixtures = loadFixtures();
         Object.keys(fixtures).map(function(date) {
             CalendarEvents.setEvents(fixtures[date]);
@@ -170,7 +170,7 @@ describe('CalendarEvents', function() {
         expect(CalendarEvents.removeDeleted).toHaveBeenCalled();
     });
 
-    it('should be able to run removeDeleted when the TVDB_IDs in FavoritesService.favoriteIDs are strings instead of ints', function() {
+    it('should be able to run removeDeleted when the TRAKT_IDs in FavoritesService.favoriteIDs are strings instead of ints', function() {
 
         spyOn(CalendarEvents, 'removeDeleted').and.callThrough();
 
