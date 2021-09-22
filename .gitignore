@@ -11,6 +11,7 @@ credits.html
 libffmpegsumo.so
 nw
 nwjc
+vk_swiftshader_icd.json
 build/nwjs_download_cache
 .idea
 **/Thumbs.db
