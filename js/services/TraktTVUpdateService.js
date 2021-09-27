@@ -109,6 +109,7 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
       updateTraktTvdbXref: async function(traktStart, traktEnd) {
         var out = {}
         var out0 = {}
+        var errorCount = 0
         for (var trakt = traktStart; trakt < traktEnd; trakt++) {
           try {
             var newSerie = await TraktTVv2.serie2(trakt)
@@ -118,8 +119,10 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
               out0[newSerie.trakt_id] = 0
             }
             console.debug('found ',newSerie.trakt_id, newSerie.title, newSerie.tvdb_id)
+            errorCount = 0
           } catch (err) {
-            // ignored
+            errorCount++
+            if (errorCount > 9) trakt = traktEnd
           }
         }
         console.debug('[Trakt->TVDB]', JSON.stringify(out))
