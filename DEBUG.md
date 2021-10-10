@@ -1,3 +1,7 @@
+#if NW crashes without launching app
+ Terminate all the nw.exe processes in task manager and then run nw with --enable-logging --v=1 under windows.
+ Find the log file 'chrome_debug.log' in the user data directory.
+ The log include a hardcopy ofthe chrome console log.
 #enable CRUD debug logging
 you can enable debug logging for CRUD activity by adding to local.storage the following:
 ```javascript
