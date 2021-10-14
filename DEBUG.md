@@ -2,6 +2,7 @@
  Terminate all the nw.exe processes in task manager and then run nw with --enable-logging --v=1 under windows.
  Find the log file 'chrome_debug.log' in the user data directory.
  The log include a hardcopy ofthe chrome console log.
+
 #enable CRUD debug logging
 you can enable debug logging for CRUD activity by adding to local.storage the following:
 ```javascript
@@ -73,6 +74,22 @@ CRUD.executeQuery('select distinct(ID_Serie) from Series').then(function(res) {
     })
 
     CRUD.executeQuery('delete from Episodes where ID_Serie not in ('+serieIds.join(',')+') ').then(function(res) {
+        console.log('done!', res.rowsAffected, 'items deleted!')
+    });
+
+});
+```
+
+##Clear seasons that were not properly deleted due to too narrow limit clause in favoritesservice.remove function
+```javascript
+var serieIds = [];
+
+CRUD.executeQuery('select distinct(ID_Serie) from Series').then(function(res) {
+    res.rows.map(function(row) {
+        serieIds.push(row.ID_Serie)
+    })
+
+    CRUD.executeQuery('delete from Seasons where ID_Serie not in ('+serieIds.join(',')+') ').then(function(res) {
         console.log('done!', res.rowsAffected, 'items deleted!')
     });
 
