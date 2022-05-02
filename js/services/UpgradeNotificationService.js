@@ -11,12 +11,18 @@ DuckieTV.run(['dialogs', '$http',
     var notifications = {
       '1.1.6': ['<li>Languages: (new) Greek, Turkish, Slovak and South African English.',
         '<li>Languages: (fix) Chinese, Dutch.',
-        '<li>SearchEngines: (new) Add ETTV (www.ettvcentral.com), ETag (extratorrent.si), IsoHunt2 (isohunt.tv), TGx (torrentgalaxy.org), EXT (ext.to).',
-        '<li>SearchEngines: (fix) Katcr new domain (newkatcr.co), EzTVag new domain (eztv.io) and results, limetorrrents dl links, 1337x dl links, TPB (*0.org), TPB mirror resolver, RarBG details links.',
-        '<li>Standalone: (upgrade) NWJS 48.1 with Chromium 85',
+        '<li>Calendar: (fix) unable to click on calendar in chromium 101.',
+        '<li>SearchEngines: (new) Add ETag (extratorrent.st), IsoHunt2 (isohunt.tv), TGx (torrentgalaxy.to), EXT (ext.to), KATws (kickass.ws).',
+        '<li>SearchEngines: (del) Katcr is broken, TorrentZ2 is gone, ETTV is gone.',
+        '<li>SearchEngines: (fix) EzTVag new domain (eztv.re) and results, limetorrrents DL links and new domain, 1337x DL links, TPB (*0.org), TPB mirror resolver, RarBG details links, torrentdownloads new domain, ETTV DL link, fix details link for Jackett indexers.',
+        '<li>Standalone: (upgrade) NWJS 62.2 with Chromium 99 with latest 0day security patches.',
+        '<li>Standalone: (fix) Prevent Chromium 79+ freezing tab if idle for more than 5 mins.',
         '<li>TorrentClient: (new) Introducing tTorrent client.',
-        '<li>TorrentClient: (fix) Replace deprecaded rTorrent calls, add support for qBitTorrent 4.2+.',
+        '<li>TorrentClient: (fix) Replace deprecaded rTorrent calls, add support for qBitTorrent 4.2+, ignore aria2 metadata file reports.',
+        '<li>TorrentClient: (fix) Upgrade Tixati API for 2.86+. Note that older versions are no longer supported.',
+        '<li>TorrentDialogs: (fix) magnetLinks were being submitted twice due to NWJS bug.',
         '<li>TorrentMonitor: (fix) Auto-Stop-All now works as intended.',
+        '<li>TraktUpdateServices: (fix) Support added for new API restrictions.',
         '<li>Misc: Bug fixes.'
       ].join('')
     }
