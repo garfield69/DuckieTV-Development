@@ -18,6 +18,18 @@ localStorage.removeItem('CRUD.DEBUG')
 ```
 
 #some debug calls
+```javascript
+localStorage.setItem('debugTSE', 'true')
+```
+```javascript
+localStorage.removeItem('debugTSE')
+```
+```javascript
+localStorage.setItem('debugTraktTVv2', 'true')
+```
+```javascript
+localStorage.removeItem('debugTraktTVv2')
+```
 
 ##Reset all watchedAt values
 ```javascript
@@ -127,4 +139,9 @@ localStorage.removeItem('snrt.name-exceptions')
 localStorage.removeItem('snrt.date-exceptions')
 localStorage.removeItem('snrt.lastFetched')
 localStorage.removeItem('snrt.traktid-tvdbid-xref')
+```
+
+## update an episode record
+```javascript
+CRUD.executeQuery("update episodes set absolute = 1053 where episodenumber == 1053 and seasonnumber == 21").then(function(result) { console.log(result); })
 ```
