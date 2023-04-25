@@ -4,8 +4,8 @@
  *
  * For API docs: check here: http://docs.trakt.apiary.io/#
  */
-DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService', 'FanartService', '$rootScope',
-  function($q, TraktTVv2, FavoritesService, FanartService, $rootScope) {
+DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService', 'FanartService', '$rootScope', 'NotificationService',
+  function($q, TraktTVv2, FavoritesService, FanartService, $rootScope, NotificationService) {
     var service = {
       /**
        * Update shows in favorites list
