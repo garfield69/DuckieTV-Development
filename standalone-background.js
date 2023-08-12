@@ -1012,7 +1012,7 @@ CRUD.Database.SQLBuilder = function(entity, filters, options) {
         this.groups.push(this.options.groupBy.replace('GROUP BY', ''));
     }
 
-    this.limit = this.options.limit ? 'LIMIT ' + options.limit : 'LIMIT 0,1000';
+    this.limit = this.options.limit ? 'LIMIT ' + options.limit : 'LIMIT 0,2000';
 
     (this.options.justthese || CRUD.EntityManager.entities[this.entity].fields).map(function(field) {
         this.fields.push(this.getFieldName(field));
@@ -1123,19 +1123,73 @@ CRUD.Database.SQLBuilder.prototype = {
  * These will be extended by CreateReadUpdateDelete.js. It is important to call the CRUD.Entity constructor
  * So that each instance can be set up with instance __values__ and __dirtyValues__ properties.
  */
+
+/**
+ * @constructor
+ * @extends CRUD.Entity
+ * @property {number} ID_Serie
+ * @property {string} name
+ * @property {string} overview
+ * @property {number} TRAKT_ID
+ * @property {number} TVDB_ID
+ * @property {number} TMDB_ID
+ * @property {string} IMDB_ID
+ * @property {string} poster
+ * @property {string} fanart
+ */
 function Serie() {
   CRUD.Entity.call(this)
 }
 
+/**
+ * @constructor
+ * @extends CRUD.Entity
+ * @property {number} ID_Season
+ * @property {number} seasonnumber
+ * @property {string} overview
+ * @property {number} TRAKT_ID
+ * @property {number} TMDB_ID
+ * @property {string} poster
+ */
 function Season() {
   CRUD.Entity.call(this)
 }
 
+/**
+ * @constructor
+ * @extends CRUD.Entity
+ * @property {number} ID_Episode
+ * @property {number} ID_Serie
+ * @property {number} ID_Season
+ * @property {number} seasonnumber
+ * @property {number} episodenumber
+ * @property {string} episodename
+ * @property {number} TRAKT_ID
+ * @property {number} TVDB_ID
+ * @property {number} TMDB_ID
+ * @property {string} IMDB_ID
+ * @property {string} filename
+ */
 function Episode() {
   CRUD.Entity.call(this)
 }
 
 function Fanart() {
+  CRUD.Entity.call(this)
+}
+
+/**
+ * @constructor
+ * @extends CRUD.Entity
+ * @property {number} id
+ * @property {number} entity_type
+ * @property {number} TMDB_ID
+ * @property {string} poster
+ * @property {string} fanart
+ * @property {string} screenshot
+ * @property {number} added
+ */
+function TMDBFanart() {
   CRUD.Entity.call(this)
 }
 
@@ -1151,7 +1205,7 @@ CRUD.define(Serie, {
   className: 'Serie',
   table: 'Series',
   primary: 'ID_Serie',
-  fields: ['ID_Serie', 'name', 'banner', 'overview', 'TVDB_ID', 'IMDB_ID', 'TVRage_ID', 'actors', 'airs_dayofweek', 'airs_time', 'timezone', 'contentrating', 'firstaired', 'genre', 'country', 'language', 'network', 'rating', 'ratingcount', 'runtime', 'status', 'added', 'addedby', 'fanart', 'poster', 'lastupdated', 'lastfetched', 'nextupdate', 'displaycalendar', 'autoDownload', 'customSearchString', 'watched', 'notWatchedCount', 'ignoreGlobalQuality', 'ignoreGlobalIncludes', 'ignoreGlobalExcludes', 'searchProvider', 'ignoreHideSpecials', 'customSearchSizeMin', 'customSearchSizeMax', 'TRAKT_ID', 'dlPath', 'customDelay', 'alias', 'customFormat', 'TMDB_ID'],
+  fields: ['ID_Serie', 'name', 'banner', 'overview', 'TVDB_ID', 'IMDB_ID', 'TVRage_ID', 'actors', 'airs_dayofweek', 'airs_time', 'timezone', 'contentrating', 'firstaired', 'genre', 'country', 'language', 'network', 'rating', 'ratingcount', 'runtime', 'status', 'added', 'addedby', 'fanart', 'poster', 'lastupdated', 'lastfetched', 'nextupdate', 'displaycalendar', 'autoDownload', 'customSearchString', 'watched', 'notWatchedCount', 'ignoreGlobalQuality', 'ignoreGlobalIncludes', 'ignoreGlobalExcludes', 'searchProvider', 'ignoreHideSpecials', 'customSearchSizeMin', 'customSearchSizeMax', 'TRAKT_ID', 'dlPath', 'customDelay', 'alias', 'customFormat', 'TMDB_ID', 'customIncludes', 'customExcludes', 'customSeeders'],
   relations: {
     'Episode': CRUD.RELATION_FOREIGN,
     'Season': CRUD.RELATION_FOREIGN
@@ -1160,7 +1214,7 @@ CRUD.define(Serie, {
     'fanart',
     'TRAKT_ID'
   ],
-  createStatement: 'CREATE TABLE Series (ID_Serie INTEGER PRIMARY KEY NOT NULL, name VARCHAR(250) DEFAULT(NULL), banner VARCHAR(1024) DEFAULT(NULL), overview TEXT DEFAULT(NULL), TVDB_ID INTEGER DEFAULT(NULL), IMDB_ID VARCHAR(20) DEFAULT(NULL), TVRage_ID INTEGER DEFAULT(NULL), actors VARCHAR(1024) DEFAULT(NULL), airs_dayofweek VARCHAR(10) DEFAULT(NULL), airs_time VARCHAR(15) DEFAULT(NULL), timezone VARCHAR(30) DEFAULT(NULL), contentrating VARCHAR(20) DEFAULT(NULL), firstaired DATE DEFAULT(NULL), genre VARCHAR(50) DEFAULT(NULL), country VARCHAR(50) DEFAULT(NULL), language VARCHAR(50) DEFAULT(NULL), network VARCHAR(50) DEFAULT(NULL), rating INTEGER DEFAULT(NULL), ratingcount INTEGER DEFAULT(NULL), runtime INTEGER DEFAULT(NULL), status VARCHAR(50) DEFAULT(NULL), added DATE DEFAULT(NULL), addedby VARCHAR(50) DEFAULT(NULL), fanart VARCHAR(150) DEFAULT(NULL), poster VARCHAR(150) DEFAULT(NULL), lastupdated TIMESTAMP DEFAULT (NULL), lastfetched TIMESTAMP DEFAULT (NULL), nextupdate TIMESTAMP DEFAULT (NULL), displaycalendar TINYINT DEFAULT(1), autoDownload TINYINT DEFAULT(1), customSearchString VARCHAR(150) DEFAULT(NULL), watched TINYINT DEFAULT(0), notWatchedCount INTEGER DEFAULT(0), ignoreGlobalQuality TINYINT DEFAULT(0), ignoreGlobalIncludes TINYINT DEFAULT(0), ignoreGlobalExcludes TINYINT DEFAULT(0), searchProvider VARCHAR(20) DEFAULT(NULL), ignoreHideSpecials TINYINT DEFAULT(0), customSearchSizeMin INTEGER DEFAULT(NULL), customSearchSizeMax INTEGER DEFAULT(NULL), TRAKT_ID INTEGER DEFAULT(NULL), dlPath TEXT DEFAULT(NULL), customDelay INTEGER DEFAULT(NULL), alias VARCHAR(250) DEFAULT(NULL), customFormat VARCHAR(20) DEFAULT(NULL), TMDB_ID INTEGER DEFAULT(NULL) )',
+  createStatement: 'CREATE TABLE Series (ID_Serie INTEGER PRIMARY KEY NOT NULL, name VARCHAR(250) DEFAULT(NULL), banner VARCHAR(1024) DEFAULT(NULL), overview TEXT DEFAULT(NULL), TVDB_ID INTEGER DEFAULT(NULL), IMDB_ID VARCHAR(20) DEFAULT(NULL), TVRage_ID INTEGER DEFAULT(NULL), actors VARCHAR(1024) DEFAULT(NULL), airs_dayofweek VARCHAR(10) DEFAULT(NULL), airs_time VARCHAR(15) DEFAULT(NULL), timezone VARCHAR(30) DEFAULT(NULL), contentrating VARCHAR(20) DEFAULT(NULL), firstaired DATE DEFAULT(NULL), genre VARCHAR(50) DEFAULT(NULL), country VARCHAR(50) DEFAULT(NULL), language VARCHAR(50) DEFAULT(NULL), network VARCHAR(50) DEFAULT(NULL), rating INTEGER DEFAULT(NULL), ratingcount INTEGER DEFAULT(NULL), runtime INTEGER DEFAULT(NULL), status VARCHAR(50) DEFAULT(NULL), added DATE DEFAULT(NULL), addedby VARCHAR(50) DEFAULT(NULL), fanart VARCHAR(150) DEFAULT(NULL), poster VARCHAR(150) DEFAULT(NULL), lastupdated TIMESTAMP DEFAULT (NULL), lastfetched TIMESTAMP DEFAULT (NULL), nextupdate TIMESTAMP DEFAULT (NULL), displaycalendar TINYINT DEFAULT(1), autoDownload TINYINT DEFAULT(1), customSearchString VARCHAR(150) DEFAULT(NULL), watched TINYINT DEFAULT(0), notWatchedCount INTEGER DEFAULT(0), ignoreGlobalQuality TINYINT DEFAULT(0), ignoreGlobalIncludes TINYINT DEFAULT(0), ignoreGlobalExcludes TINYINT DEFAULT(0), searchProvider VARCHAR(20) DEFAULT(NULL), ignoreHideSpecials TINYINT DEFAULT(0), customSearchSizeMin INTEGER DEFAULT(NULL), customSearchSizeMax INTEGER DEFAULT(NULL), TRAKT_ID INTEGER DEFAULT(NULL), dlPath TEXT DEFAULT(NULL), customDelay INTEGER DEFAULT(NULL), alias VARCHAR(250) DEFAULT(NULL), customFormat VARCHAR(20) DEFAULT(NULL), TMDB_ID INTEGER DEFAULT(NULL), customIncludes VARCHAR(150) DEFAULT(NULL), customExcludes VARCHAR(150) DEFAULT(NULL), customSeeders INTEGER DEFAULT(NULL) )',
 
   adapter: 'dbAdapter',
   defaultValues: {
@@ -1246,6 +1300,12 @@ CRUD.define(Serie, {
       'ALTER TABLE Series RENAME TO Series_bak',
       'CREATE TABLE Series (ID_Serie INTEGER PRIMARY KEY NOT NULL, name VARCHAR(250) DEFAULT(NULL), banner VARCHAR(1024) DEFAULT(NULL), overview TEXT DEFAULT(NULL), TVDB_ID INTEGER DEFAULT(NULL), IMDB_ID VARCHAR(20) DEFAULT(NULL), TVRage_ID INTEGER DEFAULT(NULL), actors VARCHAR(1024) DEFAULT(NULL), airs_dayofweek VARCHAR(10) DEFAULT(NULL), airs_time VARCHAR(15) DEFAULT(NULL), timezone VARCHAR(30) DEFAULT(NULL), contentrating VARCHAR(20) DEFAULT(NULL), firstaired DATE DEFAULT(NULL), genre VARCHAR(50) DEFAULT(NULL), country VARCHAR(50) DEFAULT(NULL), language VARCHAR(50) DEFAULT(NULL), network VARCHAR(50) DEFAULT(NULL), rating INTEGER DEFAULT(NULL), ratingcount INTEGER DEFAULT(NULL), runtime INTEGER DEFAULT(NULL), status VARCHAR(50) DEFAULT(NULL), added DATE DEFAULT(NULL), addedby VARCHAR(50) DEFAULT(NULL), fanart VARCHAR(150) DEFAULT(NULL), poster VARCHAR(150) DEFAULT(NULL), lastupdated TIMESTAMP DEFAULT (NULL), lastfetched TIMESTAMP DEFAULT (NULL), nextupdate TIMESTAMP DEFAULT (NULL), displaycalendar TINYINT DEFAULT(1), autoDownload TINYINT DEFAULT(1), customSearchString VARCHAR(150) DEFAULT(NULL), watched TINYINT DEFAULT(0), notWatchedCount INTEGER DEFAULT(0), ignoreGlobalQuality TINYINT DEFAULT(0), ignoreGlobalIncludes TINYINT DEFAULT(0), ignoreGlobalExcludes TINYINT DEFAULT(0), searchProvider VARCHAR(20) DEFAULT(NULL), ignoreHideSpecials TINYINT DEFAULT(0), customSearchSizeMin INTEGER DEFAULT(NULL), customSearchSizeMax INTEGER DEFAULT(NULL), TRAKT_ID INTEGER DEFAULT(NULL), dlPath TEXT DEFAULT(NULL), customDelay INTEGER DEFAULT(NULL), alias VARCHAR(250) DEFAULT(NULL), customFormat VARCHAR(20) DEFAULT(NULL), TMDB_ID INTEGER DEFAULT(NULL) )',
       'INSERT OR IGNORE INTO Series (ID_Serie, name, banner, overview, TVDB_ID, IMDB_ID, TVRage_ID, actors, airs_dayofweek, airs_time, timezone, contentrating, firstaired, genre, country, language, network, rating, ratingcount, runtime, status, added, addedby, fanart, poster, lastupdated, lastfetched, nextupdate, displaycalendar, autoDownload, customSearchString, watched, notWatchedCount, ignoreGlobalQuality, ignoreGlobalIncludes, ignoreGlobalExcludes, searchProvider, ignoreHideSpecials, customSearchSizeMin, customSearchSizeMax, TRAKT_ID, dlPath, customDelay, alias, customFormat) select ID_Serie, name, banner, overview, TVDB_ID, IMDB_ID, TVRage_ID, actors, airs_dayofweek, airs_time, timezone, contentrating, firstaired, genre, country, language, network, rating, ratingcount, runtime, status, added, addedby, fanart, poster, lastupdated, lastfetched, nextupdate, displaycalendar, autoDownload, customSearchString, watched, notWatchedCount, ignoreGlobalQuality, ignoreGlobalIncludes, ignoreGlobalExcludes, searchProvider, ignoreHideSpecials, customSearchSizeMin, customSearchSizeMax, TRAKT_ID, dlPath, customDelay, alias, customFormat from Series_bak',
+      'DROP TABLE Series_bak'
+    ],
+    18: [
+      'ALTER TABLE Series RENAME TO Series_bak',
+      'CREATE TABLE Series (ID_Serie INTEGER PRIMARY KEY NOT NULL, name VARCHAR(250) DEFAULT(NULL), banner VARCHAR(1024) DEFAULT(NULL), overview TEXT DEFAULT(NULL), TVDB_ID INTEGER DEFAULT(NULL), IMDB_ID VARCHAR(20) DEFAULT(NULL), TVRage_ID INTEGER DEFAULT(NULL), actors VARCHAR(1024) DEFAULT(NULL), airs_dayofweek VARCHAR(10) DEFAULT(NULL), airs_time VARCHAR(15) DEFAULT(NULL), timezone VARCHAR(30) DEFAULT(NULL), contentrating VARCHAR(20) DEFAULT(NULL), firstaired DATE DEFAULT(NULL), genre VARCHAR(50) DEFAULT(NULL), country VARCHAR(50) DEFAULT(NULL), language VARCHAR(50) DEFAULT(NULL), network VARCHAR(50) DEFAULT(NULL), rating INTEGER DEFAULT(NULL), ratingcount INTEGER DEFAULT(NULL), runtime INTEGER DEFAULT(NULL), status VARCHAR(50) DEFAULT(NULL), added DATE DEFAULT(NULL), addedby VARCHAR(50) DEFAULT(NULL), fanart VARCHAR(150) DEFAULT(NULL), poster VARCHAR(150) DEFAULT(NULL), lastupdated TIMESTAMP DEFAULT (NULL), lastfetched TIMESTAMP DEFAULT (NULL), nextupdate TIMESTAMP DEFAULT (NULL), displaycalendar TINYINT DEFAULT(1), autoDownload TINYINT DEFAULT(1), customSearchString VARCHAR(150) DEFAULT(NULL), watched TINYINT DEFAULT(0), notWatchedCount INTEGER DEFAULT(0), ignoreGlobalQuality TINYINT DEFAULT(0), ignoreGlobalIncludes TINYINT DEFAULT(0), ignoreGlobalExcludes TINYINT DEFAULT(0), searchProvider VARCHAR(20) DEFAULT(NULL), ignoreHideSpecials TINYINT DEFAULT(0), customSearchSizeMin INTEGER DEFAULT(NULL), customSearchSizeMax INTEGER DEFAULT(NULL), TRAKT_ID INTEGER DEFAULT(NULL), dlPath TEXT DEFAULT(NULL), customDelay INTEGER DEFAULT(NULL), alias VARCHAR(250) DEFAULT(NULL), customFormat VARCHAR(20) DEFAULT(NULL), TMDB_ID INTEGER DEFAULT(NULL), customIncludes VARCHAR(150) DEFAULT(NULL), customExcludes VARCHAR(150) DEFAULT(NULL), customSeeders INTEGER DEFAULT(NULL) )',
+      'INSERT OR IGNORE INTO Series (ID_Serie, name, banner, overview, TVDB_ID, IMDB_ID, TVRage_ID, actors, airs_dayofweek, airs_time, timezone, contentrating, firstaired, genre, country, language, network, rating, ratingcount, runtime, status, added, addedby, fanart, poster, lastupdated, lastfetched, nextupdate, displaycalendar, autoDownload, customSearchString, watched, notWatchedCount, ignoreGlobalQuality, ignoreGlobalIncludes, ignoreGlobalExcludes, searchProvider, ignoreHideSpecials, customSearchSizeMin, customSearchSizeMax, TRAKT_ID, dlPath, customDelay, alias, customFormat, TMDB_ID) select ID_Serie, name, banner, overview, TVDB_ID, IMDB_ID, TVRage_ID, actors, airs_dayofweek, airs_time, timezone, contentrating, firstaired, genre, country, language, network, rating, ratingcount, runtime, status, added, addedby, fanart, poster, lastupdated, lastfetched, nextupdate, displaycalendar, autoDownload, customSearchString, watched, notWatchedCount, ignoreGlobalQuality, ignoreGlobalIncludes, ignoreGlobalExcludes, searchProvider, ignoreHideSpecials, customSearchSizeMin, customSearchSizeMax, TRAKT_ID, dlPath, customDelay, alias, customFormat, TMDB_ID from Series_bak',
       'DROP TABLE Series_bak'
     ]
   }
@@ -1362,10 +1422,11 @@ CRUD.define(Serie, {
   markSerieAsWatched: function(watchedDownloadedPaired, $rootScope) {
     var self = this
     return new Promise(function(resolve) {
+      var now = new Date()
       self.getEpisodes().then(function(episodes) {
         episodes.forEach(function(episode) {
           if (episode.hasAired() && (!episode.isWatched())) {
-            return episode.markWatched(watchedDownloadedPaired, $rootScope)
+            return episode.markWatched(watchedDownloadedPaired, now, $rootScope)
           }
         })
         return resolve(true)
@@ -1467,11 +1528,12 @@ CRUD.define(Season, {
   },
   markSeasonAsWatched: function(watchedDownloadedPaired, $rootScope) {
     var self = this
+    var now = new Date()
     return new Promise(function(resolve) {
       self.getEpisodes().then(function(episodes) {
         episodes.forEach(function(episode) {
           if (episode.hasAired() && (!episode.isWatched())) {
-            return episode.markWatched(watchedDownloadedPaired, $rootScope)
+            return episode.markWatched(watchedDownloadedPaired, now, $rootScope)
           }
         })
         self.watched = 1
@@ -1611,12 +1673,12 @@ CRUD.define(Episode, {
     return this.leaked && parseInt(this.leaked) == 1
   },
 
-  markWatched: function(watchedDownloadedPaired, $rootScope) {
+  markWatched: function(watchedDownloadedPaired, watchedAt, $rootScope) {
     if (typeof watchedDownloadedPaired === 'undefined') {
       watchedDownloadedPaired = true
     }
     this.watched = 1
-    this.watchedAt = new Date().getTime()
+    this.watchedAt = (watchedAt || new Date()).getTime()
     if (watchedDownloadedPaired) {
       // if you are marking this as watched you must have also downloaded it!
       this.downloaded = 1
@@ -1692,6 +1754,18 @@ CRUD.define(Fanart, {
   indexes: ['TVDB_ID']
 }, {
 
+})
+
+CRUD.define(TMDBFanart, {
+  className: 'TMDBFanart',
+  table: 'TMDBFanart',
+  primary: 'id',
+  fields: ['id', 'entity_type', 'TMDB_ID', 'poster', 'fanart', 'screenshot', 'added'],
+  relations: {},
+  createStatement: 'CREATE TABLE TMDBFanart (id INTEGER PRIMARY KEY NOT NULL, entity_type INTEGER NOT NULL, tmdb_id INTEGER NOT NULL, poster TEXT DEFAULT(NULL), fanart TEXT DEFAULT(NULL), screenshot TEXT DEFAULT(NULL), added DATE DEFAULT(NULL))',
+  adapter: 'dbAdapter',
+  indexes: ['entity_type', 'TMDB_ID']
+}, {
 })
 
 CRUD.define(Jackett, {
@@ -1862,37 +1936,4 @@ chrome.runtime.onConnect.addListener(function(port) {
       console.log('Dropping message on closed port: ', arguments)
     }
   })
-});
-/**
- * Make sure migrations don't run on the latest versions.
- */
-chrome.runtime.onInstalled.addListener(function(details) {
-    localStorage.setItem('runtime.event', JSON.stringify(details));
-    if (details.reason == "install") {
-        console.info("This is a first install!");
-        localStorage.setItem('install.notify', chrome.runtime.getManifest().version);
-        /*
-         * example: localStorage.setItem('0.54.createtimers', 'done');
-         */
-    } else if (details.reason == "update") {
-        var thisVersion = chrome.runtime.getManifest().version;
-        console.info("Updated from " + details.previousVersion + " to " + thisVersion + "!");
-        if (details.previousVersion != thisVersion) {
-            localStorage.setItem('install.notify', thisVersion);
-        }
-    };
-});
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-    chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url.indexOf(chrome.extension.getURL('tab.html')) == 0) {
-        //console.debug('Found DuckieTV Tab');
-        chrome.tabs.update(tab.id, {selected: true});
-        return;
-      }
-    }
-    //console.debug('Could not find DuckieTV tab. Creating one...');
-    chrome.tabs.create({url: chrome.extension.getURL('tab.html')});
-  });
 });
