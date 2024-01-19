@@ -53,10 +53,28 @@ DuckieTV.factory('SceneNameResolver', ['$rootScope', '$q', '$http', 'SceneXemRes
         }
         if (serie.TRAKT_ID in episodesWithDateFormat) {
           if (typeof (moment) === 'undefined') {
-            moment = require('./js/vendor/moment.min')
+            moment = require('./js/vendor/moment.quacked.js')
           }
 
-          return $q.resolve(sceneName + moment.tz(episode.firstaired_iso, serie.timezone).format(episodesWithDateFormat[serie.TRAKT_ID]) + append)
+          // check for custom DD modifier, examples DD[-1] , DD[+5] , etc, which subtracts or adds to the number of days
+          if (episodesWithDateFormat[serie.TRAKT_ID].indexOf("DD[") > -1) {
+            // extract the modifier
+            var startDD = episodesWithDateFormat[serie.TRAKT_ID].indexOf("[")
+            var endDD = episodesWithDateFormat[serie.TRAKT_ID].indexOf("]") + 1
+            var modifierDD = episodesWithDateFormat[serie.TRAKT_ID].slice(startDD, endDD)
+            var dateFormat = episodesWithDateFormat[serie.TRAKT_ID].replace(modifierDD, "")
+            if (modifierDD.indexOf("-") > -1) {
+              // subtract days
+              var modifierNumber = modifierDD.replace("[-", "").replace("]", "")
+              return $q.resolve(sceneName + moment.tz(episode.firstaired_iso, serie.timezone).subtract(modifierNumber, 'd').format(dateFormat) + append)
+            } else {
+              // add days
+              var modifierNumber = modifierDD.replace("[+", "").replace("]", "")
+              return $q.resolve(sceneName + moment.tz(episode.firstaired_iso, serie.timezone).add(modifierNumber, 'd').format(dateFormat) + append)
+            }
+          } else {
+            return $q.resolve(sceneName + moment.tz(episode.firstaired_iso, serie.timezone).format(episodesWithDateFormat[serie.TRAKT_ID]) + append)
+          }
         } else {
           return SceneXemResolver.getEpisodeMapping(serie, episode, sceneName, append)
         }
@@ -122,14 +140,12 @@ DuckieTV.factory('SceneNameResolver', ['$rootScope', '$q', '$http', 'SceneXemRes
 
 DuckieTV.run(['$rootScope', 'SceneNameResolver', 'TraktTVUpdateService',
   function($rootScope, SceneNameResolver, TraktTVUpdateService) {
-    /*
     $rootScope.$on('snrt:updated', function(event) {
         // set range of trakt records to fetch and extract the tvdbid, output -> console.
         var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
         var lastTraktid = firstTraktid + 300
         TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
     })
-    */
     /*
     $rootScope.$on('snrt:loaded', function(event) {
         // set range of trakt records to fetch and extract the tvdbid, output -> console.
@@ -139,13 +155,12 @@ DuckieTV.run(['$rootScope', 'SceneNameResolver', 'TraktTVUpdateService',
 //        var lastTraktid = firstTraktid + 1
         TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
     })
-    */
     /*
     $rootScope.$on('snrt:loaded', function(event) {
         // check if any of the Xref have now been added to trakt.tv records on the servers
         TraktTVUpdateService.trimTraktTvdbXref(SceneNameResolver.getTraktidsFromXref(),
         189783)
-    })
+        })
     */
     SceneNameResolver.initialize()
   }
