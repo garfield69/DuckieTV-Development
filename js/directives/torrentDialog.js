@@ -390,6 +390,10 @@ DuckieTV
         $modalInstance.close('Closed')
       }
 
+      $scope.viewlog = function() {
+        nw.Window.get().showDevTools()
+      }
+
       // Toggle advanced filter state
       $scope.toggleShowAdvanced = function() {
         $scope.showAdvanced = !$scope.showAdvanced
