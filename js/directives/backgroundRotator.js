@@ -61,7 +61,7 @@ DuckieTV.directive('backgroundRotator', ['$rootScope',
             return
           }
 
-          const name = $scope.bgItem.name?.slice(0, 30)
+          const name = $scope.bgItem.name
           const year = new Date($scope.bgItem.firstaired)?.getFullYear()
 
           if (name && year) {
