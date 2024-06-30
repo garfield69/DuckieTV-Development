@@ -10,5 +10,12 @@ DuckieTV.controller('MiscellaneousCtrl', ['$scope', 'SettingsService',
       $scope.watchedDownloadedPaired = !$scope.watchedDownloadedPaired
       SettingsService.set('episode.watched-downloaded.pairing', $scope.watchedDownloadedPaired)
     }
+    $scope.updateSNRT = function() {
+      localStorage.removeItem('snrt.lastFetched')
+      localStorage.removeItem('snrt.name-exceptions')
+      localStorage.removeItem('snrt.date-exceptions')
+      localStorage.removeItem('snrt.traktid-tvdbid-xref')
+      window.location.reload()
+    }
   }
 ])

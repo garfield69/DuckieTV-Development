@@ -13,4 +13,11 @@
   <a ng-click="togglewatchedDownloadedPaired()" class="btn btn-{{watchedDownloadedPaired ? 'info' : 'success'}}">
     <i class="glyphicon glyphicon-{{watchedDownloadedPaired ? 'remove' : 'ok'}}" ></i> {{watchedDownloadedPaired ? 'COMMON/disable/btn' : 'COMMON/enable/btn'|translate}}
   </a>
+  <hr class="setting-divider">
+  <h2>
+    <li translate-once>Update SNRT</li>
+  </h2>
+  <a ng-click="updateSNRT()" class="btn btn-success">
+    <i class="glyphicon glyphicon-download-alt"></i> Update
+  </a>
 </div>
