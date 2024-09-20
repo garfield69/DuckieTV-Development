@@ -8,7 +8,7 @@ DuckieTV.factory('ThePirateBayMirrorResolver', ['$q', '$http', '$injector',
     var maxAttempts = 3
 
     var endpoints = {
-      thepiratebay: 'https://proxybay.pages.dev/'
+      thepiratebay: 'https://piratebayproxy.net/'
     }
 
     /**
@@ -24,7 +24,7 @@ DuckieTV.factory('ThePirateBayMirrorResolver', ['$q', '$http', '$injector',
     function parsePirateBayProxyList(result) {
       var parser = new DOMParser()
       var doc = parser.parseFromString(result.data, 'text/html')
-      var resultList = doc.querySelectorAll('td.site a[rel=nofollow]')
+      var resultList = doc.querySelectorAll('td.tableurl a[rel*=nofollow]')
       return resultList[Math.floor(Math.random() * resultList.length)].href
     }
 
