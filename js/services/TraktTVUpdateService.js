@@ -107,12 +107,14 @@ DuckieTV.factory('TraktTVUpdateService', ['$q', 'TraktTVv2', 'FavoritesService',
         )
       },
 
-      trimTraktTvdbXref: async function(XrefTraktids,firstTraktid) {
+      trimTraktTvdbXref: async function(XrefTraktids,firstTraktid,lastTraktid) {
+        firstTraktid = (firstTraktid == null) ? 0 : firstTraktid
+        lastTraktid = (lastTraktid == null) ? 999999 : lastTraktid
         var traktStart = 0
         var traktEnd = XrefTraktids.length - 1
         for (var trakt = traktStart; trakt < traktEnd; trakt++) {
           var traktid = XrefTraktids[trakt]
-          if (traktid >= firstTraktid) {
+          if (traktid >= firstTraktid && traktid <= lastTraktid) {
             try {
               var newSerie = await TraktTVv2.serie2(traktid)
               if (newSerie.tvdb_id != 0 && newSerie.tvdb_id != null) {
