@@ -1,4 +1,4 @@
-DuckieTV Binary, Chrome and Online [![Build Status](https://travis-ci.org/SchizoDuckie/DuckieTV.svg?branch=angular)](https://travis-ci.org/SchizoDuckie/DuckieTV)
+DuckieTV as a Standalone Binary
 ==============================================
 
 DuckieTV is an application that takes care of TV-Show addicts by providing a personalized TV-Show calendar. DuckieTV ensures the information is always up to date and provides an integrated blocking resistant torrent search so that the download can be as easy as possible.
@@ -12,34 +12,17 @@ As of v0.60, DuckieTV is finally becoming a worthy SickBeard competitor by intro
 How can I get it?
 =================
 
-DuckieTV can be installed as either a standalone application on Windows (7, 8.1, 10, 11), Linux (Debian based such as Ubuntu 15.10 and newer), and Mac OSX (10.15 and newer), or installed as a Google Chrome Browser Extension (in development mode).
+DuckieTV can be installed as an application on Windows (7, 8.1, 10, 11), Linux (Debian based such as Ubuntu 15.10 and newer), and Mac OSX (10.15 and newer).
 
-Install DuckieTV Standalone
+Install DuckieTV
 -------------------------------------------
-As of v0.81, DuckieTV is available as a standalone build.
 Get the latest release here:
 
 https://github.com/DuckieTV/Nightlies/releases/latest
 
-Install DuckieTV For Chrome, Safari, Opera, Vivaldi or Edge.
+DuckieTV For Chrome, Safari, Opera, Vivaldi or Edge browsers is no longer supported.
 ---------------------------
-DuckieTV for Chrome comes in 2 versions: One that installs itself as your browser's "new tab" page, and one that just provides an easily accessible button to open DuckieTV.
-
-~~[DuckieTV 'New Tab mode': Installs itself as your new tab page]~~
-
-~~[DuckieTV 'Browser Action mode': Adds a button next to your address bar]~~
-
-Due to changes to the Google Chrome Web Store security rules (Dec 2019), Dtv is no longer being accepted as an extension app.
-
-Currently the only way to run Dtv as a Chrome extension, is to manually install it under the development mode extensions page.
-
-**Starting with Chromium 119 Web SQL (The database that Dtv uses) is no longer supported.**
-You can re-enable the WebSQL support by using this override flag:
-`chrome://flags/#web-sql-access` then clicking enable and relaunch.
-
-I do not know for how long this bypass will be available, so expect it to vanish by version 123.
-
-See [Installing DuckieTV Nightly Chrome Browser Extensions](https://github.com/SchizoDuckie/DuckieTV/wiki/How-to-Install-a-Development-version-of-the-DuckieTV-Chrome-Browser-Extension-NIGHTLY) for details.
+**Starting with Chromium 124 Web SQL (The database that Dtv uses) is no longer available.**
 
 Screenshots:
 ============
@@ -79,7 +62,7 @@ Screenshots:
 
 Changelog:
 ==========
-* Nightly : ◆ **AutoDownload**: *(new)* Now able to use series custom Seeders, custom Includes and custom Excludes. ◆ **FanArt**: *(fix)* Previously the default image was selected, now select the first English image if available. ◆ **TMDBArt**: *(new)* Refactor image loading to use TMDB. This complements and progressively takes over from FanArt. ◆ **SearchEngines**: *(new)*  Add ETag (extratorrent.st), IsoHunt2 (isohunt.tv), TGx (torrentgalaxy.to), EXT (ext.to), KATws (kickass.ws), Knaben (knaben.eu). ◆ **SearchEngines**: *(del)* KATcr is broken, TorrentZ2 is gone, ETTV is gone, Zooqle is gone, RarBG is gone, EzTV no results without cookie. ◆ **SearchEngines**: *(fix)* limetorrrents DL links and new domain, 1337x DL links, TPB (*0.org), TPB mirror resolver, torrentdownloads new domain, fix details link for Jackett indexers. ◆ **Standalone**: *(upgrade)* NWJS 81.1 with Chromium 118. The last of the Web SQL support. ◆ **Standalone**: *(fix)* Prevent Chromium 112+ freezing tabs if idle. Switch chromium-args: --flag-switches-begin --disable-features=HighEfficiencyModeAvailable --flag-switches-end. ◆ **Languages**: *(new)* Greek, Turkish, Slovak, South African English. ◆ **Languages**: *(fix)* Chinese, Dutch. ◆ **TorrentClient**: *(new)* Introducing tTorrent client. ◆ **TorrentClient**: *(fix)* replace deprecated rTorrent calls, add support for qBitTorrent 4.2+, ignore aria2 metadata file reports.  ◆ **TorrentClient**: *(fix)* qBitTorrent 4.5+ fix API call to remove torrent ◆ **TorrentClient**: *(fix)* Upgrade Tixati API for 2.86+. Note that older versions are no longer supported. ◆ **TorrentDialogs**: *(fix)* magnetLinks were being submitted twice due to NWJS bug. ◆ **TorrentMonitor**: *(fix)* Auto-Stop-All now works as intended. ◆ **TraktUpdateServices**: *(fix)* Support added for new API restrictions.◆ **Trakt**: *(new)* Preserve watched timestamp from Trakt.TV during import. ◆ **Log_GR**: *(del)* Drop Error-Tracking-Loggr, the service is no longer available. ◆ **Misc**: *Bug fixes*.
+* Nightly : ◆ **AutoDownload**: *(new)* Now able to use series custom Seeders, custom Includes and custom Excludes. ◆ **DataBase**: *(fix)* Make TRAKT_ID unique to prevent duplicate records. ◆ **TMDBfanArt**: *(new)* Refactor image loading to use TMDB. This complements and progressively takes over from FanArt. ◆ **Languages**: *(new)* Greek, Turkish, Slovak, South African English. ◆ **Languages**: *(fix)* Chinese, Dutch. ◆ **Log_GR**: *(del)* Drop Error-Tracking-Loggr, the service is no longer available. ◆ **sceneNameResolver**: *(new)* add custom support to subtract/add days from date formated serie names eg YYYY MM DD[-1]. ◆ **SearchEngines**: *(new)*  Add ETag (extratorrent.st), IsoHunt2 (isohunt.tv), TGx (torrentgalaxy.to), EXT (ext.to), KATws (kickass.ws), Knaben (knaben.eu), TheRARBG (t-rb.org). ◆ **SearchEngines**: *(del)* KATcr is broken, TorrentZ2 is gone, ETTV is gone, Zooqle is gone, RarBG is gone, EzTV no results without cookie. ◆ **SearchEngines**: *(fix)* Limetorrrents DL links and new domain, 1337x DL links, TPB (*0.org) + fix details link, TPB mirror resolver (piratebayproxy.net), torrentdownloads new domain, fix details link for Jackett indexers. ◆ **Standalone**: *(new)* Mac OSX ARM64 package now available. ◆ **Standalone**: *(upgrade)* NWJS 0.88.0 with Chromium 125. ◆ **Standalone**: *(fix)* Prevent Chromium 112+ freezing tabs if idle. Switch chromium-args: --flag-switches-begin --disable-features=HighEfficiencyModeAvailable --flag-switches-end. **Standalone**: *(fix)* Rework saving widow position.◆ **TorrentClient**: *(new)* Introducing tTorrent client. ◆ **TorrentClient**: *(fix)* replace deprecated rTorrent calls, add support for qBitTorrent 4.2+, ignore aria2 metadata file reports. ◆ **TorrentClient**: *(fix)* qBitTorrent 4.5+ fix API call to remove torrent ◆ ◆ **TorrentClient**: *(fix)* qBitTorrent 5.0+ fix API call to start/stop torrent ◆ **TorrentClient**: *(fix)* Upgrade Tixati API for 2.86+. Note that older versions are no longer supported. ◆ **TorrentDialogs**: *(fix)* magnetLinks were being submitted twice due to NWJS bug. ◆ **TorrentDialogs**: *(add)* Add WEB to the quality list of the torrent search dialogues. ◆ **TorrentDialogs**: *(fix)* Trap SE errors so dialogues can report. ◆ **TorrentDialog2**: *(add)* individual SE spinners during searching. ◆ **TorrentMonitor**: *(fix)* Auto-Stop-All now works as intended. ◆ **Trakt**: *(new)* Preserve watched timestamp from Trakt.TV during import. ◆ **TraktTrending**: *(new)* Add option to view by Ended, Returning or Cancelled. ◆ **TraktTrending**: *(new)* Now updated Daily instead of Weekly. ◆ **TraktUpdateServices**: *(fix)* Support added for new API restrictions. ◆ **Misc**: *Bug fixes*.
 * v1.1.5 : ◆ **AutoDownload**: *(new)* Now able to download .torrent files \o/. ◆ **Database**: *(fix)* Moved the database management services to the *Background* task, to minimise interruptions to DB updates and maintain integrity. ◆ **Favourites**: *(new)* Remembers last used sort selection. ◆ **Favourites**: *(new)* Introducing Anime support. Now a search can use the absolute episode number when available. • Series Settings allows the user to select any available Alias to replace the default Title in searches. ◆ **SearchEngines**: *(new)* Introducing Jackett! You can use the Jackett proxy to access your favourite open/semi-private/private trackers as DuckieTV Search Engines. ◆ **SearchEngines**: *(removed)* IsoHunt.to is gone. ◆ **Standalone**: *(upgrade)* NWJS 25.0 with Chromium 61 and Node 8.4.0 ◆ **TorrentClient**: *(new)* Introducing Aria2 client. ◆ **TorrentClient**: *(new)* Introducing BiglyBT client. ◆ **TorrentClient**: *(fix)* Can now connect with qBitTorrent 3.3.14 (and newer) with CSRF protection. ◆ **TorrentClient**: *(fix)* Can now connect with Deluge 1.3.14 (and newer) with CSRF protection. ◆ **Torrent Dialog [multi-SE]**: *(new)* Remembers last used sort selection. ◆ **Trakt-Sync**: *(upgrade)* When an episode is marked as downloaded it is added to the collected list of a user's Trakt account. ◆ **Trakt-Trending sidepanel**: *(upgrade)* Now using buttons instead of mouse-hover to improve browsing experience. ◆ **Misc**: *Bug fixes*.
 * v1.1.4 : ◆ Performance: Massive database write performance improvement. ◆ User Interface: Split up favorites and adding mode, introduced 'todo' mode. You can now add multiple shows at once. • (new) Yellow stars now indicate show or season premieres ◆ Images: (fix) switched to Fanart.tv for all images after Trakt.tv ended support ◆ AutoDownload: (new) using global Require/Ignore Keywords • (new) series custom-search-provider option • (new) option to ignore global Quality, Require and Ignore keywords via series custom settings • (new) use series custom search string • (new) use global/custom size min/max • (fix) episodes with date scene names bug • (new) monitor autoDownload activity via status sidepanel • (new) make AD wait until episode has aired before searching • (new) series custom AD additional delay before searching ◆ FastSearch: (new) introducing the fast-search feature. Just start typing and a dialog pops up with the first six matches of your series from favourites, series from Trakt.TV, and the first 9 matches of episodes from favourites and torrent search. ◆ Standalone: (upgrade) nwjs 20.x chromium 56.x Node 7.5.x (fix) linux minimize bug • (new) option to open add-new-torrent panel on torrentHost • (fix) linux and mac multi-systray bug • (fix) defaults for first-time users bug • (new) option to set the color of the system tray icon ◆ TorrentClients: (new) rTorrent and Ktorrent clients • (new) add remove-torrent functionality to all client Interfaces • (fix) Deluge auto-stop and downloaded bugs • (fix) qBittorrent auto-stop bug • (fix) renamed qBittorrent client to qBittorrent (pre 3.2) for clarity • (new) add series custom download path option for torrentClients that support it ◆ SearchEngines: (fix) remove Strike, KAT and Torrentz as they are gone • (new) add 1337x, Idope, IsoHunt, KATcr, LimeTorrents, SkyTorrents, TorrentDownloads, TorrentZ2 and Zooqle • (fix) drop find-random-KAT-mirror feature as rockaproxy is gone • (fix) bug in RarBG causing non-found results after 15 minutes • (new) add 2160p search quality ◆ Favorites: (new) sort menu for name, added, first-aired and not-watched-count • (new) series poster context-menu for mark-all-watched, show/hide from calendar, and remove-series ◆ Series Sidepanel: (new) option to make the episodes-button jump to the first not-watched season • (fix) mark-all-watched did not sync to Trakt.TV • (new) confirm mark-all-watched dialog ◆ Season Sidepanel: (fix) jump to active season ignores specials unless there is no other seasons • (fix) mark-all-watched did not sync to Trakt.TV • (new) confirm mark-all-watched dialog ◆ Episode Sidepanel: (fix) overview text not height limited bug ◆ Calendar: (fix) events multi-episodes badge incorrectly counted hidden specials bug • (new) Series option to ignore global Hide Specials from calendar • (new) events single click to mark episode as watched • (new) Highlight season premiers with gold star ◆ Top10: (fix) invalid-data handling bug ◆ Subtitles: (fix) net::err_empty_response handling bug ◆ Translations: Russian by galeksandrp, updated italian translations by lamaresh, updated Dutch translations ◆ TraktTV: (new) Option to change the frequency of the Episode updates. ◆ TorrentDialog: (new) Option to sort the Seeders, Leechers and Size column • (new) Option to search using all the Search Engines at once • (add) Option to enable Sort menu to sort by Age. ◆ Backup: (new) A Backup can now be automatically scheduled. Choose between Never,Daily,Weekly or the default Monthly. ◆ Misc bug fixes.
 * v1.1.3 : • Translations: Romanian by honeybunny from Addic7ed, French by Tra-Vis, Norwegian by hexjelly, Spanish by iachopolo • Bug fixes for Torrent Client Integrations • Improve Autodownload torrent search matching • Fixed adding shows with numeric titles • optionally display season and episode on calendar • integrated XEM • added marking all of a days shows as downloaded • Season navigation • settings/display options for standalone minimize to Taskbar or Systray • misc bug fixes.
@@ -137,21 +120,6 @@ Changelog:
 * v0.12 : Added kickass torrent search for when thepiratebay is down. Will be reworked into something nicer soon
 * v0.11 : First 'browser action' release
 * v0.10 : First public release.
-
-Permissions
-===========
-
-Chrome will report that this plugin wants to access your data on all websites and read/modify your browser history.
-
-The permissions are actually less scary than they look. Chrome doesn't have the granular permissions system that Android has, so labels can be confusing versus what they're actually used for.
-
-**Access your data on all websites**
-
-The plugin request permissions to access http://*.*/ to be able to allow any random mirror to be used for The Pirate Bay and custom trackers in the future. Chrome's extension model requires you to whitelist *exactly* the urls that you are accessing, which becomes impossible because of this.
-
-**Read and modify your browser history**
-
-The plugin requests this to use the Chrome.Topsites API that allows to display your most favorite sites on the new tab extension. If you do not wish to give this permission, please use the 'Browser Action' version.
 
 Privacy Statement
 =================
