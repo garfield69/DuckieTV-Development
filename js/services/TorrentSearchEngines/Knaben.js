@@ -9,7 +9,7 @@ DuckieTV.run(['TorrentSearchEngines', 'SettingsService', '$q', '$http', '$inject
           search: '/search/%s/0/1/%o'
         },
         selectors: {
-          resultContainer: 'tr[title^="Cached "]',
+          resultContainer: 'tr[data-id]',
           releasename: ['td:nth-child(2) a', 'innerText'],
           magnetUrl: ['td:nth-child(2) a', 'href'],
           size: ['td:nth-child(3)', 'innerText'],
