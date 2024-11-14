@@ -135,7 +135,7 @@ DuckieTV.factory('AutoDownloadService', ['$rootScope', '$injector', '$filter', '
                   }
 
                   if (!serie.TVDB_ID) {
-                    service.activityUpdate(serie, episode, serieEpisode, 9, "TVDB_ID") // 'TVDB_ID'
+                    service.activityUpdate(serie, episode, serieEpisode, 9) // 'TVDB_ID missing'
                   } else {
                     if (serie.autoDownload == 1) {
                       service.autoDownload(serie, episode)
