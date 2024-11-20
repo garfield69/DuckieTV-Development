@@ -19,7 +19,7 @@ DuckieTV.controller('SidepanelEpisodeCtrl', ['serie', 'episode', 'season', 'Auto
 
     var gotoFirstUnwatchedSeason = SettingsService.get('series.not-watched-eps-btn')
     vm.gotoEpisodes = function() {
-      var getSeasonFunc = gotoFirstUnwatchedSeason ? serie.getNotWatchedSeason() : serie.getActiveSeason()
+      var getSeasonFunc = gotoFirstUnwatchedSeason ? serie.getNotWatchedSeason() : serie.getLatestSeason()
 
       getSeasonFunc.then(function(result) {
         $state.go('serie.season', {
