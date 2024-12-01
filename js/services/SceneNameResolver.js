@@ -151,17 +151,17 @@ DuckieTV.run(['$rootScope', 'SceneNameResolver', 'TraktTVUpdateService',
         // set range of trakt records to fetch and extract the tvdbid, output -> console.
         var firstTraktid = SceneNameResolver.getLastTraktidXref() + 1
         var lastTraktid = firstTraktid + 300
-//        var firstTraktid = 195000
+//        var firstTraktid = 200000
 //        var lastTraktid = firstTraktid + 1
         TraktTVUpdateService.updateTraktTvdbXref(firstTraktid, lastTraktid)
     })
     /*
     $rootScope.$on('snrt:loaded', function(event) {
         // check if any of the Xref have now been added to trakt.tv records on the servers
-        TraktTVUpdateService.trimTraktTvdbXref(SceneNameResolver.getTraktidsFromXref(),
-        189783)
-        })
+//        TraktTVUpdateService.trimTraktTvdbXref(SceneNameResolver.getTraktidsFromXref(),200000)
+        TraktTVUpdateService.trimTraktTvdbXref(SceneNameResolver.getTraktidsFromXref(),0,200000)
+    })
     */
     SceneNameResolver.initialize()
-  }
+   }
 ])
