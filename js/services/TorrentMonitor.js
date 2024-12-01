@@ -54,7 +54,10 @@ DuckieTV
                 torrent.name,
                 torrentHash
               ].join(' ')
-              NotificationService.notify('Torrent finished',torrentDetails)
+              NotificationService.notify(
+                'Torrent finished',
+                torrentDetails
+              )
             } else {
               var episodeDetails = [
                 FavoritesService.getByID_Serie(episode.ID_Serie).name,
